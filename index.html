@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC GD PDF Hub</title>
+    <!-- Google Fonts for a clean look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global styles */
+        :root {
+            --neon-black: #1a1a1a;
+            --button-bg-color: #333;
+            --button-hover-color: #555;
+            --text-color: #fff;
+            --main-text-color: #00ff00; /* Neon green for main text */
+            --sub-text-color: #00ffff; /* Neon cyan for sub-text */
+            --border-color: #00ff00;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--neon-black);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+            border: 2px solid var(--border-color);
+            position: relative;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: var(--main-text-color);
+            text-shadow: 0 0 5px var(--main-text-color);
+            margin-bottom: 20px;
+        }
+        
+        /* Main button styling */
+        .btn-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Aligned to start for better scroll layout */
+            gap: 15px;
+            overflow-y: auto; /* Enable vertical scrolling */
+            padding-right: 10px; /* Space for scrollbar */
+        }
+
+        .btn {
+            padding: 15px 25px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            background-color: var(--button-bg-color);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 255, 0, 0.2);
+            width: 100%;
+            max-width: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .btn:hover {
+            background-color: var(--button-hover-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 255, 0, 0.4);
+        }
+
+        /* SSC GD specific button */
+        #ssc-gd-btn {
+            font-size: 24px;
+            height: 150px;
+            width: 150px;
+            border-radius: 20px;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #ssc-gd-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .emoji {
+            font-size: 28px;
+        }
+        
+        /* Subject/Chapter button styling */
+        .subject-btn, .chapter-btn {
+            width: 80%;
+            padding: 12px;
+        }
+
+        /* Links and content styling */
+        .content-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-align: left;
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        .link-item {
+            background-color: #2c2c2c;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 5px solid var(--sub-text-color);
+            box-shadow: 0 2px 10px rgba(0, 255, 255, 0.1);
+        }
+
+        .link-item h3 {
+            color: var(--sub-text-color);
+            margin-top: 0;
+        }
+
+        .link-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .link-actions a {
+            padding: 8px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .view-btn {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .view-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .download-btn {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .download-btn:hover {
+            background-color: #1e7e34;
+        }
+
+        /* Back button styling */
+        #back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #555;
+            color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #back-btn:hover {
+            background-color: #777;
+        }
+
+        /* Hide/Show logic */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="back-btn" class="hidden">← Back</div>
+
+    <div id="main-screen" class="btn-container">
+        <h1>SSC GD PDF Hub</h1>
+        <button id="ssc-gd-btn" class="btn">
+            <span class="emoji">📚</span>
+            <span>SSC GD</span>
+        </button>
+    </div>
+
+    <div id="all-class-pdf-screen" class="btn-container hidden">
+        <button id="all-class-pdf-btn" class="btn">
+            <span class="emoji">📂</span>
+            <span>ALL CLASS PDF'S</span>
+        </button>
+    </div>
+
+    <div id="subject-screen" class="btn-container hidden">
+        <button id="hindi-btn" class="btn subject-btn"><span class="emoji"></span> HINDI</button>
+        <button id="math-btn" class="btn subject-btn"><span class="emoji">➕</span> MATH</button>
+        <button id="reasoning-btn" class="btn subject-btn"><span class="emoji">🧠</span> REASONING</button>
+        <button id="gk-gs-btn" class="btn subject-btn"><span class="emoji">🌍</span> GK/GS</button>
+    </div>
+
+    <div id="hindi-chapters-screen" class="btn-container hidden"></div>
+    <div id="math-chapters-screen" class="btn-container hidden"></div>
+    <div id="reasoning-chapters-screen" class="btn-container hidden"></div>
+    <div id="gk-gs-chapters-screen" class="btn-container hidden"></div>
+
+    <div id="content-screen" class="content-container hidden">
+        <h2 id="content-title"></h2>
+        <!-- PDF links will be dynamically added here -->
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Get all the screen elements
+        const screens = {
+            main: document.getElementById('main-screen'),
+            allClassPdf: document.getElementById('all-class-pdf-screen'),
+            subject: document.getElementById('subject-screen'),
+            hindiChapters: document.getElementById('hindi-chapters-screen'),
+            mathChapters: document.getElementById('math-chapters-screen'),
+            reasoningChapters: document.getElementById('reasoning-chapters-screen'),
+            gkGsChapters: document.getElementById('gk-gs-chapters-screen'),
+            content: document.getElementById('content-screen')
+        };
+
+        // Get button elements
+        const sscGDBtn = document.getElementById('ssc-gd-btn');
+        const allClassPdfBtn = document.getElementById('all-class-pdf-btn');
+        const hindiBtn = document.getElementById('hindi-btn');
+        const mathBtn = document.getElementById('math-btn');
+        const reasoningBtn = document.getElementById('reasoning-btn');
+        const gkGsBtn = document.getElementById('gk-gs-btn');
+        const backBtn = document.getElementById('back-btn');
+        const contentTitle = document.getElementById('content-title');
+
+        // State management for navigation
+        const navigationHistory = [{ screen: 'main' }];
+
+        // Define data for each subject and its chapters
+        const data = {
+            hindi: {
+                title: 'हिंदी PDF’s',
+                chapters: {
+                    'vilom-shabd': { name: 'विलोम शब्द', emoji: '🔄', links: [{ title: 'विलोम शब्द उदाहरण 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'विलोम शब्द अभ्यास 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'vartaniya': { name: 'वर्तनीय @@', emoji: '✏️', links: [{ title: 'वर्तनीय नियम PDF', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'वर्तनीय अभ्यास प्रश्न', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'vakyansh': { name: 'वाक्यांश', emoji: '📝', links: [{ title: 'वाक्यांश उदाहरण', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'वाक्यांश अभ्यास', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'paryavachi': { name: 'पर्यावची शब्द', emoji: '🌳', links: [{ title: 'पर्यायवाची शब्द नोट्स', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'पर्यायवाची शब्द प्रश्न', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'tatsam-tadbhav': { name: 'तत्सम तद्भव', emoji: '📜', links: [{ title: 'तत्सम तद्भव नोट्स', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'तत्सम तद्भव प्रश्न', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'deshaj-videshaj': { name: 'देशज विदेशद शब्द', emoji: '🗣️', links: [{ title: 'देशज-विदेशज नोट्स', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'देशज-विदेशज अभ्यास', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'abhyash-prashan': { name: 'अभयाश प्राशन तत्सम तद्भव', emoji: '❓', links: [{ title: 'अभ्यास प्रश्न 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'अभ्यास प्रश्न 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'shabd-yugm': { name: 'शब्द युग्म', emoji: '⚖️', links: [{ title: 'शब्द युग्म उदाहरण', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'शब्द युग्म प्रश्न', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'anekarthik': { name: 'अनेकरथिक शब्द', emoji: '🎭', links: [{ title: 'अनेकार्थिक शब्द नोट्स', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'अनेकार्थिक शब्द अभ्यास', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'sangya': { name: 'संज्ञा', emoji: '👤', links: [{ title: 'संज्ञा के प्रकार', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'संज्ञा प्रश्नोत्तरी', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'sarvanam': { name: 'सर्वनाम', emoji: '🤝', links: [{ title: 'सर्वनाम नियम', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'सर्वनाम अभ्यास', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'visheshad': { name: 'विशेषड', emoji: '🌟', links: [{ title: 'विशेषण नोट्स', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'विशेषण प्रश्न', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'kriya': { name: 'क्रिया', emoji: '🏃', links: [{ title: 'क्रिया के भेद', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'क्रिया अभ्यास', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'kaal': { name: 'काल @', emoji: '⏰', links: [{ title: 'काल के नियम', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'काल प्रश्नोत्तरी', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'link': { name: 'लिंक #', emoji: '🔗', links: [{ title: 'लिंग के प्रकार', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'लिंग अभ्यास', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'vachan': { name: 'वचन @', emoji: '👥', links: [{ title: 'वचन के नियम', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'वचन अभ्यास', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'ling-vachan-abhyas': { name: 'लिंग वचन अभ्यास', emoji: '📖', links: [{ title: 'लिंग-वचन अभ्यास 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'लिंग-वचन अभ्यास 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'karak': { name: 'कारक #', emoji: '🎯', links: [{ title: 'कारक के नियम', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'कारक प्रश्न', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'avyay': { name: 'अव्यय #', emoji: '❌', links: [{ title: 'अव्यय के प्रकार', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'अव्यय प्रश्न', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] }
+                }
+            },
+            math: {
+                title: 'गणित PDF’s',
+                chapters: {
+                    'ratio-proporation': { name: 'Ratio & Proporation', emoji: '📈', links: [{ title: 'Ratio & Proporation Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Ratio & Proporation Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'lcm-hcf': { name: 'LCM & HCF', emoji: '🔢', links: [{ title: 'LCM & HCF Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'LCM & HCF Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'time-and-work': { name: 'Time and Work', emoji: '⏱️', links: [{ title: 'Time and Work Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Time and Work Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'pipe-tanki': { name: 'Pipe or Tanki', emoji: '💧', links: [{ title: 'Pipe and Tank Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Pipe and Tank Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'ausat': { name: 'औसत', emoji: '📊', links: [{ title: 'Average Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Average Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'pratishat': { name: 'प्रतिशत', emoji: '💯', links: [{ title: 'Percentage Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Percentage Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'labh-hani': { name: 'लाभ और हानी', emoji: '💰', links: [{ title: 'Profit & Loss Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Profit & Loss Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'batta': { name: 'बट्टा', emoji: '📉', links: [{ title: 'Discount Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Discount Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'sadharan-byaj': { name: 'साधारण ब्याज', emoji: '💵', links: [{ title: 'Simple Interest Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Simple Interest Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'chakravridhhi-byaj': { name: 'चक्रवृद्धि ब्याज', emoji: '🏦', links: [{ title: 'Compound Interest Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Compound Interest Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'samay-chal-duri': { name: 'समय & चल और दूरी', emoji: '🛣️', links: [{ title: 'Time, Speed, Distance Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Time, Speed, Distance Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'relgadi': { name: 'रेलगाड़ी', emoji: '🚂', links: [{ title: 'Trains Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Trains Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'nav-dhara': { name: 'नाव एण्ड धारा', emoji: '⛵', links: [{ title: 'Boats & Streams Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Boats & Streams Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'number-system': { name: 'Number System', emoji: '🔢', links: [{ title: 'Number System Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Number System Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'saralikaran': { name: 'सरलीकरण', emoji: '🧮', links: [{ title: 'Simplification Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Simplification Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'trikonmiti': { name: 'त्रिकोणमिति', emoji: '📐', links: [{ title: 'Trigonometry Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Trigonometry Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] }
+                }
+            },
+            reasoning: {
+                title: 'रीजनिंग PDF’s',
+                chapters: {
+                    'coding-decoding': { name: 'Coding Decoding', emoji: '🧩', links: [{ title: 'Coding Decoding Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Coding Decoding Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'analogy-test': { name: 'Analogy Test', emoji: '🤔', links: [{ title: 'Analogy Test Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Analogy Test Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'ven-arekh': { name: 'वेन आरेख', emoji: '⭕', links: [{ title: 'वेन आरेख उदाहरण', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'वेन आरेख प्रश्न', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'alphabet-test': { name: 'Alphabet Test', emoji: '🔡', links: [{ title: 'Alphabet Test Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Alphabet Test Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'word-formation': { name: 'Word Formation', emoji: '✍️', links: [{ title: 'Word Formation Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Word Formation Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'number-series': { name: 'Number Series', emoji: '🔢', links: [{ title: 'Number Series Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Number Series Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'wrong-number-series': { name: 'Worng Number Series', emoji: '❌', links: [{ title: 'Wrong Number Series Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Wrong Number Series Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'alphabet-series': { name: 'Alphabet series', emoji: '🔤', links: [{ title: 'Alphabet Series Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Alphabet Series Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'repeated-series': { name: 'Repeated Series', emoji: '🔁', links: [{ title: 'Repeated Series Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Repeated Series Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'similar-set': { name: 'Similar Set', emoji: '👯', links: [{ title: 'Similar Set Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Similar Set Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'blood-relation': { name: 'Blood Relation', emoji: '👪', links: [{ title: 'Blood Relation Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Blood Relation Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'mathematical-operations': { name: 'Mathatical Operations', emoji: '✖️', links: [{ title: 'Math Operations Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Math Operations Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'missing-number': { name: 'Missing Number', emoji: '🕵️', links: [{ title: 'Missing Number Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Missing Number Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'classification': { name: 'Classification', emoji: '🗂️', links: [{ title: 'Classification Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Classification Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'ranking-test': { name: 'Ranking Test', emoji: '🥇', links: [{ title: 'Ranking Test Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Ranking Test Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'order-sequence': { name: 'Order Sequence', emoji: '📃', links: [{ title: 'Order Sequence Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Order Sequence Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'seating-arrangement': { name: 'Seating arreangement', emoji: '🪑', links: [{ title: 'Seating Arrangement Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Seating Arrangement Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'pasa': { name: 'पासा', emoji: '🎲', links: [{ title: 'पासा उदाहरण', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'पासा अभ्यास', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'syllogism': { name: 'Syllogism', emoji: '💡', links: [{ title: 'Syllogism Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Syllogism Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'direction': { name: 'Direction', emoji: '🧭', links: [{ title: 'Direction Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Direction Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'mirror-image': { name: 'Mirror & Water Image & Paper Folding or cutting', emoji: '🖼️', links: [{ title: 'Mirror Image Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Water Image Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'figure-completions': { name: 'Figure Completions & Hidden Figure', emoji: '🧩', links: [{ title: 'Figure Completion Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Hidden Figure Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'figure-series': { name: 'Figure Series', emoji: '➡️', links: [{ title: 'Figure Series Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Figure Series Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'miscellaneous': { name: 'Miscellaneous', emoji: '🤔', links: [{ title: 'Miscellaneous Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Miscellaneous Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'figure-counting': { name: 'Figure Counting', emoji: '🔢', links: [{ title: 'Figure Counting Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Figure Counting Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'calendar': { name: 'Calendar', emoji: '🗓️', links: [{ title: 'Calendar Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Calendar Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'clock': { name: 'clock', emoji: '🕰️', links: [{ title: 'Clock Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Clock Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] }
+                }
+            },
+            gkGs: {
+                title: 'GK/GS PDF’s',
+                chapters: {
+                    'geography': { name: 'Geography', emoji: '🗺️', links: [{ title: 'Geography Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Geography Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'physics': { name: 'physics', emoji: '⚛️', links: [{ title: 'Physics Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Physics Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'polity': { name: 'polity', emoji: '🏛️', links: [{ title: 'Polity Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Polity Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'economics': { name: 'economics', emoji: '📊', links: [{ title: 'Economics Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Economics Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'history': { name: 'History', emoji: '📜', links: [{ title: 'History Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'History Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'statik-gk': { name: 'Statik Gk', emoji: '�', links: [{ title: 'Statik Gk Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Statik Gk Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'chemistry': { name: 'Chemistry', emoji: '🧪', links: [{ title: 'Chemistry Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Chemistry Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] }
+                }
+            }
+        };
+
+        // Function to show a specific screen and hide others
+        function showScreen(screenId) {
+            Object.values(screens).forEach(screen => screen.classList.add('hidden'));
+            screens[screenId].classList.remove('hidden');
+        }
+
+        // Function to render chapter buttons for a subject
+        function renderChapters(subjectKey) {
+            const subjectData = data[subjectKey];
+            const chapterScreen = screens[`${subjectKey}Chapters`];
+            chapterScreen.innerHTML = ''; // Clear previous chapters
+
+            for (const key in subjectData.chapters) {
+                if (subjectData.chapters.hasOwnProperty(key)) {
+                    const chapter = subjectData.chapters[key];
+                    const button = document.createElement('button');
+                    button.className = 'btn chapter-btn';
+                    button.innerHTML = `<span class="emoji">${chapter.emoji}</span><span>${chapter.name}</span>`;
+                    button.addEventListener('click', () => {
+                        showScreen('content');
+                        renderLinks(subjectKey, key);
+                        navigationHistory.push({ screen: 'content', subject: subjectKey, chapter: key });
+                        backBtn.classList.remove('hidden');
+                    });
+                    chapterScreen.appendChild(button);
+                }
+            }
+        }
+        
+        // Function to render PDF links for a specific chapter
+        function renderLinks(subjectKey, chapterKey) {
+            const links = data[subjectKey].chapters[chapterKey].links;
+            const contentContainer = screens.content;
+            contentContainer.innerHTML = ''; // Clear previous content
+
+            contentTitle.textContent = data[subjectKey].chapters[chapterKey].name;
+            contentContainer.appendChild(contentTitle); // Add title back
+            
+            links.forEach(link => {
+                const linkItem = document.createElement('div');
+                linkItem.className = 'link-item';
+                linkItem.innerHTML = `
+                    <h3>${link.title}</h3>
+                    <div class="link-actions">
+                        <a href="${link.view}" class="btn view-btn" target="_blank">View</a>
+                        <a href="${link.download}" class="btn download-btn" download>Download</a>
+                    </div>
+                `;
+                contentContainer.appendChild(linkItem);
+            });
+        }
+
+        // Event Listeners for main buttons
+        sscGDBtn.addEventListener('click', () => {
+            showScreen('allClassPdf');
+            navigationHistory.push({ screen: 'allClassPdf' });
+            backBtn.classList.remove('hidden');
+        });
+
+        allClassPdfBtn.addEventListener('click', () => {
+            showScreen('subject');
+            navigationHistory.push({ screen: 'subject' });
+            backBtn.classList.remove('hidden');
+        });
+
+        // Event Listeners for subject buttons
+        hindiBtn.addEventListener('click', () => {
+            showScreen('hindiChapters');
+            renderChapters('hindi');
+            navigationHistory.push({ screen: 'hindiChapters' });
+            backBtn.classList.remove('hidden');
+        });
+        mathBtn.addEventListener('click', () => {
+            showScreen('mathChapters');
+            renderChapters('math');
+            navigationHistory.push({ screen: 'mathChapters' });
+            backBtn.classList.remove('hidden');
+        });
+        reasoningBtn.addEventListener('click', () => {
+            showScreen('reasoningChapters');
+            renderChapters('reasoning');
+            navigationHistory.push({ screen: 'reasoningChapters' });
+            backBtn.classList.remove('hidden');
+        });
+        gkGsBtn.addEventListener('click', () => {
+            showScreen('gkGsChapters');
+            renderChapters('gkGs');
+            navigationHistory.push({ screen: 'gkGsChapters' });
+            backBtn.classList.remove('hidden');
+        });
+
+        // Back button functionality
+        backBtn.addEventListener('click', () => {
+            if (navigationHistory.length > 1) {
+                navigationHistory.pop(); // Remove current screen from history
+                const previousState = navigationHistory[navigationHistory.length - 1];
+                showScreen(previousState.screen);
+            }
+            if (navigationHistory.length <= 1) {
+                 backBtn.classList.add('hidden');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
