@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,21 +10,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Global styles */
+        /* Global styles - ab SGS EXAM CRACKER ki tarah */
         :root {
             --neon-black: #1a1a1a;
-            --button-bg-color: #333;
-            --button-hover-color: #555;
-            --text-color: #fff;
-            --main-text-color: #00ff00; /* Neon green for main text */
-            --sub-text-color: #00ffff; /* Neon cyan for sub-text */
-            --border-color: #00ff00;
+            --white-text: #ffffff;
+            --blue-glow: #00bfff;
+            --yellow-glow: #ffea00;
+            --red-glow: #ff4500;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--neon-black);
-            color: var(--text-color);
+            color: var(--white-text);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -35,33 +34,46 @@
         .container {
             width: 90%;
             max-width: 600px;
-            padding: 20px;
-            background-color: #222;
-            border-radius: 20px;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
-            border: 2px solid var(--border-color);
+            padding: 2rem;
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--blue-glow); /* Blue glow border */
             position: relative;
             max-height: 90vh;
             display: flex;
             flex-direction: column;
         }
-
-        h1 {
-            color: var(--main-text-color);
-            text-shadow: 0 0 5px var(--main-text-color);
-            margin-bottom: 20px;
-        }
         
-        /* Main button styling */
+        /* Main heading style - SGS EXAM CRACKER se */
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background-color: var(--red-glow);
+            color: var(--neon-black);
+            text-shadow: 0 0 10px var(--blue-glow), 0 0 20px rgba(0, 191, 255, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-bottom: 2rem; 
+            animation: neonGlowBlue 1.5s ease-in-out infinite alternate;
+        }
+
+        /* Animations for glowing effect */
+        @keyframes neonGlowBlue {
+            from { text-shadow: 0 0 10px var(--blue-glow), 0 0 20px rgba(0, 191, 255, 0.5); }
+            to { text-shadow: 0 0 15px var(--blue-glow), 0 0 30px rgba(0, 191, 255, 0.8); }
+        }
+
         .btn-container {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start; /* Aligned to start for better scroll layout */
+            justify-content: flex-start;
             gap: 15px;
-            overflow-y: auto; /* Enable vertical scrolling */
-            padding-right: 10px; /* Space for scrollbar */
+            overflow-y: auto;
+            padding-right: 10px;
         }
 
         .btn {
@@ -69,12 +81,12 @@
             font-size: 18px;
             font-weight: 600;
             border: none;
-            border-radius: 12px;
-            background-color: var(--button-bg-color);
-            color: var(--text-color);
+            border-radius: 25px; /* More rounded */
+            background-color: var(--yellow-glow); /* Yellow for main buttons */
+            color: var(--neon-black);
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 255, 0, 0.2);
+            box-shadow: 0 0 5px var(--yellow-glow), 0 0 10px rgba(255, 234, 0, 0.5);
             width: 100%;
             max-width: 250px;
             display: flex;
@@ -83,14 +95,22 @@
             text-align: center;
             line-height: 1.2;
         }
-
+        
         .btn:hover {
-            background-color: var(--button-hover-color);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 255, 0, 0.4);
+            transform: scale(1.05);
+            background-color: #ffe600;
+            box-shadow: 0 0 10px var(--yellow-glow), 0 0 20px rgba(255, 234, 0, 0.8);
         }
 
-        /* SSC GD specific button */
+        .btn.blue {
+            background-color: var(--blue-glow); /* Blue buttons for subjects */
+            box-shadow: 0 0 5px var(--blue-glow), 0 0 10px rgba(0, 191, 255, 0.5);
+        }
+        .btn.blue:hover {
+            background-color: #00c8ff;
+            box-shadow: 0 0 10px var(--blue-glow), 0 0 20px rgba(0, 191, 255, 0.8);
+        }
+
         #ssc-gd-btn {
             font-size: 24px;
             height: 150px;
@@ -100,21 +120,21 @@
             gap: 10px;
         }
 
-        #ssc-gd-btn:hover {
-            transform: scale(1.05);
-        }
-
         .emoji {
             font-size: 28px;
         }
         
-        /* Subject/Chapter button styling */
         .subject-btn, .chapter-btn {
             width: 80%;
             padding: 12px;
+            background-color: var(--blue-glow); /* All sub-buttons are blue */
+            box-shadow: 0 0 5px var(--blue-glow), 0 0 10px rgba(0, 191, 255, 0.5);
+        }
+        .subject-btn:hover, .chapter-btn:hover {
+            background-color: #00c8ff;
+            box-shadow: 0 0 10px var(--blue-glow), 0 0 20px rgba(0, 191, 255, 0.8);
         }
 
-        /* Links and content styling */
         .content-container {
             flex-grow: 1;
             display: flex;
@@ -129,12 +149,13 @@
             background-color: #2c2c2c;
             padding: 15px;
             border-radius: 10px;
-            border-left: 5px solid var(--sub-text-color);
-            box-shadow: 0 2px 10px rgba(0, 255, 255, 0.1);
+            border-left: 5px solid var(--blue-glow); /* Blue glow border */
+            box-shadow: 0 2px 10px rgba(0, 191, 255, 0.1);
         }
 
         .link-item h3 {
-            color: var(--sub-text-color);
+            color: var(--yellow-glow); /* Yellow glow title */
+            text-shadow: 0 0 5px var(--yellow-glow);
             margin-top: 0;
         }
 
@@ -170,23 +191,6 @@
             background-color: #1e7e34;
         }
 
-        /* Back button styling */
-        #back-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background-color: #555;
-            color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        #back-btn:hover {
-            background-color: #777;
-        }
-
         /* Hide/Show logic */
         .hidden {
             display: none !important;
@@ -196,8 +200,6 @@
 <body>
 
 <div class="container">
-    <div id="back-btn" class="hidden">← Back</div>
-
     <div id="main-screen" class="btn-container">
         <h1>SSC GD PDF Hub</h1>
         <button id="ssc-gd-btn" class="btn">
@@ -207,13 +209,15 @@
     </div>
 
     <div id="all-class-pdf-screen" class="btn-container hidden">
+        <h1>ALL CLASS PDF'S</h1>
         <button id="all-class-pdf-btn" class="btn">
             <span class="emoji">📂</span>
-            <span>ALL CLASS PDF'S</span>
+            <span>PDF'S</span>
         </button>
     </div>
 
     <div id="subject-screen" class="btn-container hidden">
+        <h1>Subjects</h1>
         <button id="hindi-btn" class="btn subject-btn"><span class="emoji"></span> HINDI</button>
         <button id="math-btn" class="btn subject-btn"><span class="emoji">➕</span> MATH</button>
         <button id="reasoning-btn" class="btn subject-btn"><span class="emoji">🧠</span> REASONING</button>
@@ -229,7 +233,6 @@
         <h2 id="content-title"></h2>
         <!-- PDF links will be dynamically added here -->
     </div>
-
 </div>
 
 <script>
@@ -245,6 +248,7 @@
             gkGsChapters: document.getElementById('gk-gs-chapters-screen'),
             content: document.getElementById('content-screen')
         };
+        const mainTitle = document.querySelector('#main-screen h1');
 
         // Get button elements
         const sscGDBtn = document.getElementById('ssc-gd-btn');
@@ -253,11 +257,7 @@
         const mathBtn = document.getElementById('math-btn');
         const reasoningBtn = document.getElementById('reasoning-btn');
         const gkGsBtn = document.getElementById('gk-gs-btn');
-        const backBtn = document.getElementById('back-btn');
         const contentTitle = document.getElementById('content-title');
-
-        // State management for navigation
-        const navigationHistory = [{ screen: 'main' }];
 
         // Define data for each subject and its chapters
         const data = {
@@ -346,35 +346,40 @@
                     'polity': { name: 'polity', emoji: '🏛️', links: [{ title: 'Polity Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Polity Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
                     'economics': { name: 'economics', emoji: '📊', links: [{ title: 'Economics Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Economics Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
                     'history': { name: 'History', emoji: '📜', links: [{ title: 'History Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'History Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'statik-gk': { name: 'Statik Gk', emoji: '�', links: [{ title: 'Statik Gk Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Statik Gk Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
+                    'statik-gk': { name: 'Statik Gk', emoji: '', links: [{ title: 'Statik Gk Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Statik Gk Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
                     'chemistry': { name: 'Chemistry', emoji: '🧪', links: [{ title: 'Chemistry Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Chemistry Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] }
                 }
             }
         };
 
         // Function to show a specific screen and hide others
-        function showScreen(screenId) {
+        function showScreen(screenId, title = '') {
             Object.values(screens).forEach(screen => screen.classList.add('hidden'));
             screens[screenId].classList.remove('hidden');
+            // Update main heading based on screen
+            if (title) {
+                mainTitle.textContent = title;
+            } else {
+                mainTitle.textContent = 'SSC GD PDF Hub';
+            }
         }
 
         // Function to render chapter buttons for a subject
         function renderChapters(subjectKey) {
             const subjectData = data[subjectKey];
             const chapterScreen = screens[`${subjectKey}Chapters`];
-            chapterScreen.innerHTML = ''; // Clear previous chapters
-
+            chapterScreen.innerHTML = `<h1>${subjectData.title}</h1>`; // Add subject title to the screen
+            
             for (const key in subjectData.chapters) {
                 if (subjectData.chapters.hasOwnProperty(key)) {
                     const chapter = subjectData.chapters[key];
                     const button = document.createElement('button');
-                    button.className = 'btn chapter-btn';
+                    button.className = 'btn chapter-btn blue';
                     button.innerHTML = `<span class="emoji">${chapter.emoji}</span><span>${chapter.name}</span>`;
                     button.addEventListener('click', () => {
                         showScreen('content');
                         renderLinks(subjectKey, key);
-                        navigationHistory.push({ screen: 'content', subject: subjectKey, chapter: key });
-                        backBtn.classList.remove('hidden');
+                        history.pushState({ screen: 'content', subject: subjectKey, chapter: key }, '', '');
                     });
                     chapterScreen.appendChild(button);
                 }
@@ -387,8 +392,9 @@
             const contentContainer = screens.content;
             contentContainer.innerHTML = ''; // Clear previous content
 
-            contentTitle.textContent = data[subjectKey].chapters[chapterKey].name;
-            contentContainer.appendChild(contentTitle); // Add title back
+            const title = document.createElement('h1');
+            title.textContent = data[subjectKey].chapters[chapterKey].name;
+            contentContainer.appendChild(title);
             
             links.forEach(link => {
                 const linkItem = document.createElement('div');
@@ -406,53 +412,73 @@
 
         // Event Listeners for main buttons
         sscGDBtn.addEventListener('click', () => {
-            showScreen('allClassPdf');
-            navigationHistory.push({ screen: 'allClassPdf' });
-            backBtn.classList.remove('hidden');
+            showScreen('allClassPdf', 'ALL CLASS PDF\'S');
+            history.pushState({ screen: 'allClassPdf' }, '', '');
         });
 
         allClassPdfBtn.addEventListener('click', () => {
-            showScreen('subject');
-            navigationHistory.push({ screen: 'subject' });
-            backBtn.classList.remove('hidden');
+            showScreen('subject', 'Subjects');
+            history.pushState({ screen: 'subject' }, '', '');
         });
 
         // Event Listeners for subject buttons
         hindiBtn.addEventListener('click', () => {
-            showScreen('hindiChapters');
             renderChapters('hindi');
-            navigationHistory.push({ screen: 'hindiChapters' });
-            backBtn.classList.remove('hidden');
+            showScreen('hindiChapters', data.hindi.title);
+            history.pushState({ screen: 'hindiChapters', subject: 'hindi' }, '', '');
         });
         mathBtn.addEventListener('click', () => {
-            showScreen('mathChapters');
             renderChapters('math');
-            navigationHistory.push({ screen: 'mathChapters' });
-            backBtn.classList.remove('hidden');
+            showScreen('mathChapters', data.math.title);
+            history.pushState({ screen: 'mathChapters', subject: 'math' }, '', '');
         });
         reasoningBtn.addEventListener('click', () => {
-            showScreen('reasoningChapters');
             renderChapters('reasoning');
-            navigationHistory.push({ screen: 'reasoningChapters' });
-            backBtn.classList.remove('hidden');
+            showScreen('reasoningChapters', data.reasoning.title);
+            history.pushState({ screen: 'reasoningChapters', subject: 'reasoning' }, '', '');
         });
         gkGsBtn.addEventListener('click', () => {
-            showScreen('gkGsChapters');
             renderChapters('gkGs');
-            navigationHistory.push({ screen: 'gkGsChapters' });
-            backBtn.classList.remove('hidden');
+            showScreen('gkGsChapters', data.gkGs.title);
+            history.pushState({ screen: 'gkGsChapters', subject: 'gkGs' }, '', '');
         });
 
-        // Back button functionality
-        backBtn.addEventListener('click', () => {
-            if (navigationHistory.length > 1) {
-                navigationHistory.pop(); // Remove current screen from history
-                const previousState = navigationHistory[navigationHistory.length - 1];
-                showScreen(previousState.screen);
+        // Browser back button functionality
+        window.addEventListener('popstate', (event) => {
+            if (event.state) {
+                switch(event.state.screen) {
+                    case 'main':
+                        showScreen('main');
+                        break;
+                    case 'allClassPdf':
+                        showScreen('allClassPdf', 'ALL CLASS PDF\'S');
+                        break;
+                    case 'subject':
+                        showScreen('subject', 'Subjects');
+                        break;
+                    case 'hindiChapters':
+                    case 'mathChapters':
+                    case 'reasoningChapters':
+                    case 'gkGsChapters':
+                        showScreen(event.state.screen, data[event.state.subject].title);
+                        renderChapters(event.state.subject);
+                        break;
+                    case 'content':
+                        showScreen('content');
+                        renderLinks(event.state.subject, event.state.chapter);
+                        break;
+                    default:
+                        showScreen('main');
+                }
+            } else {
+                showScreen('main');
             }
-            if (navigationHistory.length <= 1) {
-                 backBtn.classList.add('hidden');
-            }
+        });
+        
+        // Initial app load
+        window.addEventListener('load', () => {
+             showScreen('main');
+             history.replaceState({ screen: 'main' }, '', '');
         });
     });
 </script>
