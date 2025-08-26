@@ -8,6 +8,8 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 
     <!-- Firebase compat SDKs -->
     <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js"></script>
@@ -16,29 +18,294 @@
 
     <style>
         :root{
-            --bg:#0f1724; --card:#0b1220; --accent:#00bfff;
+            --bg:#070d18; 
+            --card:#101a2c; 
+            --accent:#00bfff;
+            --secondary-bg: #0b1220;
         }
-        body{font-family:'Poppins',sans-serif;background:var(--bg);color:#fff;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:20px}
-        .wrap{width:100%;max-width:900px;background:rgba(15,23,36,.95);border-radius:12px;padding:20px;border:2px solid rgba(0,191,255,.08)}
-        h1{margin:0 0 12px;font-size:26px;color:#ff6b6b}
-        .btn{background:var(--accent);color:#001;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600; font-size: 14px;}
-        .btn.ghost{background:#1f2937;color:#fff}
-        .btn.warn{background:#ff6b6b;color:#fff}
-        .flex{display:flex;gap:8px;flex-wrap:wrap; align-items: center;}
-        .hidden{display:none!important}
-        select,input,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #334155;background:#071026;color:#fff}
-        .col{display:flex;flex-direction:column;gap:10px}
-        .card{background:var(--card);padding:12px;border-radius:10px;border:1px solid #1f2937}
-        .message{padding:10px;border-radius:8px;margin-top:8px}
-        .success{background:#065f46;color:#fff}
-        .error{background:#7f1d1d;color:#fff}
+        body{
+            font-family:'Poppins',sans-serif;
+            background:var(--bg);
+            color:#fff;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            min-height:100vh;
+            margin:0;
+            padding:20px;
+            background-image: linear-gradient(135deg, #070d18 0%, #0c1a2c 100%);
+            animation: gradient-anim 15s ease infinite;
+        }
+
+        @keyframes gradient-anim {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .wrap {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(15,23,36,0.5);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 191, 255, 0.1);
+        }
+
+        h1 {
+            margin: 0 0 20px;
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: 1px;
+            color: #ff6b6b;
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.4);
+        }
+        
+        /* New style for both Subjects and Chapters header */
+        .glowing-header {
+            font-size: 1.8rem;
+            text-align: center;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 12px;
+            color: #00bfff;
+            border: 2px solid #00bfff;
+            box-shadow: 0 0 15px #00bfff, 0 0 25px #00bfff;
+            margin-bottom: 20px;
+            animation: glow-pulse 2s infinite ease-in-out;
+        }
+        @keyframes glow-pulse {
+            0%, 100% { box-shadow: 0 0 15px #00bfff, 0 0 25px #00bfff; }
+            50% { box-shadow: 0 0 25px #00bfff, 0 0 40px #00bfff; }
+        }
+
+
+        .btn {
+            background: var(--accent);
+            color: #001;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.2), transparent);
+            transition: all 0.6s;
+            z-index: -1;
+        }
+
+        .btn:hover:before {
+            left: 100%;
+        }
+        
+        /* New style for the subject buttons with red glowing outline */
+        .btn.subject-glow-btn {
+            background: #1f2937; /* Dark background to highlight the glow */
+            color: #fff;
+            border: 2px solid #ff4d4d; /* Red border */
+            box-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff4d4d, 0 0 30px #ff4d4d;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            animation: pulse-glow 2s infinite ease-in-out;
+            transition: transform 0.3s ease;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff4d4d; }
+            50% { box-shadow: 0 0 20px #ff4d4d, 0 0 40px #ff4d4d; }
+        }
+        
+        .btn.subject-glow-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 20px #ff4d4d, 0 0 40px #ff4d4d, 0 0 60px #ff4d4d;
+        }
+
+        .btn.ghost {
+            background: #1f2937;
+            color: #fff;
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+
+        .btn.ghost:hover {
+            background: #2a384a;
+            transform: translateY(-2px);
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn.warn {
+            background: #ff6b6b;
+            color: #fff;
+            font-size: 0.9rem;
+            padding: 8px 16px;
+        }
+
+        .btn.warn:hover {
+            background: #e55a5a;
+        }
+
+        .flex {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .flex.centered {
+            justify-content: center;
+        }
+
+        /* Adjusted flexbox for subject screen to make buttons column-like */
+        .flex.col-subjects {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        select, input, textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            background: #0e1628;
+            color: #fff;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        select:focus, input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(0, 191, 255, 0.3);
+        }
+
+        label {
+            font-weight: 500;
+            color: #a0a8b4;
+            margin-bottom: 4px;
+        }
+
+        .col {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid #1f2937;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .message {
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        .success {
+            background: #065f46;
+            color: #fff;
+        }
+
+        .error {
+            background: #7f1d1d;
+            color: #fff;
+        }
 
         /* chapters list scroll */
-        .chapter-list{display:flex;flex-direction:column;gap:8px;margin-top:12px;max-height:52vh;overflow:auto;padding-right:6px}
-        .chapter-list .btn{width:100%;text-align:left;padding:10px;border-radius:8px}
-        .question-box{background:#071026;padding:12px;border-radius:8px;margin-top:10px}
-        .question-list-item{display:flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px solid #334155;}
-        .question-list-item .btn {padding: 6px 10px;}
+        .chapter-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+            max-height: 52vh;
+            overflow: auto;
+            padding-right: 8px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) #1f2937;
+        }
+        .chapter-list::-webkit-scrollbar { width: 8px; }
+        .chapter-list::-webkit-scrollbar-track { background: #1f2937; border-radius: 10px; }
+        .chapter-list::-webkit-scrollbar-thumb { background-color: var(--accent); border-radius: 10px; border: 2px solid #1f2937; }
+
+        .chapter-list .btn {
+            width: 100%;
+            text-align: center; /* Centered text */
+            padding: 22px 30px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            background: #0b1220;
+            color: #fff;
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+        .chapter-list .btn:hover {
+            background: #1f2937;
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+
+        .question-box {
+            background: var(--secondary-bg);
+            padding: 20px;
+            border-radius: 16px;
+            margin-top: 15px;
+            border: 1px solid #1a2333;
+        }
+        
+        .question-list-item {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 10px; 
+            border-bottom: 1px solid #334155;
+            transition: background-color 0.2s ease;
+        }
+        
+        .question-list-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .question-list-item .btn {
+            padding: 8px 14px;
+        }
+
+        .admin-login-link {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            text-align: center;
+            margin-top: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .admin-login-link:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -46,20 +313,28 @@
     <h1 id="main-title">SSC GD QUIZ APP</h1>
 
     <!-- MAIN SCREEN -->
-    <div id="main-screen" class="col">
-      <div class="flex" style="margin-bottom:12px">
-        <button id="ssc-gd-btn" class="btn">📚 SSC GD</button>
-        <button id="admin-login-btn" class="btn warn">⚙️ Admin Login</button>
+    <div id="main-screen" class="col centered">
+      <div class="flex centered" style="margin-bottom:12px; flex-direction: column;">
+        <button id="ssc-gd-btn" class="btn">
+            <i class="fa-solid fa-graduation-cap mr-2"></i>
+            📚 SSC GD
+        </button>
+        <!-- The requested "छोटे से बटन" below SSC GD button -->
+        <button id="admin-login-btn" class="btn warn" style="margin-top: 10px; padding: 6px 12px; font-size: 0.8rem; border-radius: 8px; border: none;">
+            ⚙️ Admin Login
+        </button>
       </div>
     </div>
 
     <!-- SUBJECT SCREEN -->
     <div id="subject-screen" class="col hidden">
-      <div class="flex">
-        <button id="hindi-btn" class="btn ghost">🇮🇳 हिंदी</button>
-        <button id="math-btn" class="btn ghost">➕ गणित</button>
-        <button id="reasoning-btn" class="btn ghost">🧠 रीज़निंग</button>
-        <button id="gk-gs-btn" class="btn ghost">🌍 GK/GS</button>
+      <h2 class="glowing-header">Subjects</h2>
+      <!-- Subjects now in a column layout -->
+      <div class="flex col-subjects centered">
+        <button id="hindi-btn" class="btn subject-glow-btn">🇮🇳 हिंदी</button>
+        <button id="math-btn" class="btn subject-glow-btn">➕ गणित</button>
+        <button id="reasoning-btn" class="btn subject-glow-btn">🧠 रीज़निंग</button>
+        <button id="gk-gs-btn" class="btn subject-glow-btn">🌍 GK/GS</button>
       </div>
     </div>
 
@@ -74,9 +349,9 @@
       <div class="card" style="max-width:480px">
         <label>ईमेल</label>
         <input id="admin-email" type="email" placeholder="ईमेल दर्ज करें" />
-        <label>पासवर्ड</label>
+        <label style="margin-top:10px">पासवर्ड</label>
         <input id="admin-password" type="password" placeholder="पासवर्ड दर्ज करें" />
-        <div class="flex" style="margin-top:8px">
+        <div class="flex" style="margin-top:20px; justify-content: flex-end;">
           <button id="login-btn" class="btn">लॉगिन करें</button>
           <button id="back-to-main-from-login" class="btn ghost">← वापस</button>
         </div>
@@ -88,7 +363,7 @@
     <div id="admin-panel-screen" class="col hidden">
       <div class="card" style="max-width:860px">
         <h3>प्रश्न अपलोड / मैनेज करें</h3>
-        <div class="col" style="margin-top:8px">
+        <div class="col" style="margin-top:15px">
           <label>सब्जेक्ट चुनें</label>
           <select id="subject-select"></select>
 
@@ -106,7 +381,7 @@
 
           <input type="hidden" id="question-key-input" />
           
-          <div class="flex">
+          <div class="flex" style="margin-top:10px; justify-content: flex-end;">
             <button id="upload-question-btn" class="btn">प्रश्न अपलोड करें</button>
             <button id="update-question-btn" class="btn hidden">प्रश्न अपडेट करें</button>
             <button id="cancel-edit-btn" class="btn ghost hidden">कैंसिल</button>
@@ -116,9 +391,9 @@
           <div id="upload-message" class="message hidden"></div>
         </div>
 
-        <div id="questions-list-container" class="col" style="margin-top:20px;">
+        <div id="questions-list-container" class="col" style="margin-top:30px;">
           <h4>मौजूदा प्रश्न</h4>
-          <div id="questions-list">कोई प्रश्न उपलब्ध नहीं।</div>
+          <div id="questions-list" class="chapter-list">कोई प्रश्न उपलब्ध नहीं।</div>
         </div>
       </div>
     </div>
@@ -289,6 +564,13 @@ function escapeHtml(s){ if (s===undefined || s===null) return ''; return String(
 function renderChapters(subjectKey) {
   const container = screens.chapters;
   container.innerHTML = '';
+  
+  // New: Chapters header
+  const header = document.createElement('h2');
+  header.className = 'glowing-header';
+  header.textContent = 'Chapters';
+  container.appendChild(header);
+
   // back button
   const back = document.createElement('button');
   back.className = 'btn ghost';
@@ -511,6 +793,30 @@ function resetAdminForm() {
     setMessage(uploadMessage, '');
 }
 
+function deleteQuestion(key, subject, chapter) {
+    const modal = document.createElement('div');
+    modal.style.cssText = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 1000;";
+    modal.innerHTML = `
+        <div class="card" style="padding: 2rem; max-width: 400px; text-align: center; border: 1px solid #ff6b6b;">
+            <p>क्या आप सच में इस प्रश्न को हटाना चाहते हैं?</p>
+            <div class="flex" style="justify-content: center; margin-top: 1.5rem;">
+                <button id="confirm-delete" class="btn warn">हाँ, हटाएँ</button>
+                <button id="cancel-delete" class="btn ghost">नहीं, कैंसिल</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    document.getElementById('confirm-delete').addEventListener('click', () => {
+        db.ref(`questions/${subject}/${chapter}/${key}`).remove()
+            .then(() => setMessage(uploadMessage, 'प्रश्न सफलतापूर्वक हटा दिया गया।', 'success'))
+            .catch(err => setMessage(uploadMessage, 'हटाने में त्रुटि: ' + err.message, 'error'));
+        document.body.removeChild(modal);
+    });
+    document.getElementById('cancel-delete').addEventListener('click', () => {
+        document.body.removeChild(modal);
+    });
+}
+
 function editQuestion(key, subject, chapter) {
     db.ref(`questions/${subject}/${chapter}/${key}`).once('value', snapshot => {
         const q = snapshot.val();
@@ -526,13 +832,6 @@ function editQuestion(key, subject, chapter) {
     });
 }
 
-function deleteQuestion(key, subject, chapter) {
-    if (confirm('क्या आप सच में इस प्रश्न को हटाना चाहते हैं?')) {
-        db.ref(`questions/${subject}/${chapter}/${key}`).remove()
-            .then(() => setMessage(uploadMessage, 'प्रश्न सफलतापूर्वक हटा दिया गया।', 'success'))
-            .catch(err => setMessage(uploadMessage, 'हटाने में त्रुटि: ' + err.message, 'error'));
-    }
-}
 
 uploadQuestionBtn.addEventListener('click', () => {
   const subject = subjectSelect.value;
