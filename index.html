@@ -1,522 +1,620 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSC GD PDF Hub</title>
-    <!-- Google Fonts for a clean look -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>SSC GD QUIZ APP — All Chapters</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Firebase compat SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-database-compat.js"></script>
+
     <style>
-        /* Global styles - ab SGS EXAM CRACKER ki tarah */
-        :root {
-            --neon-black: #1a1a1a;
-            --white-text: #ffffff;
-            --blue-glow: #00bfff;
-            --yellow-glow: #ffea00;
-            --red-glow: #ff4500;
+        :root{
+            --bg:#0f1724; --card:#0b1220; --accent:#00bfff;
         }
+        body{font-family:'Poppins',sans-serif;background:var(--bg);color:#fff;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:20px}
+        .wrap{width:100%;max-width:900px;background:rgba(15,23,36,.95);border-radius:12px;padding:20px;border:2px solid rgba(0,191,255,.08)}
+        h1{margin:0 0 12px;font-size:26px;color:#ff6b6b}
+        .btn{background:var(--accent);color:#001;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600; font-size: 14px;}
+        .btn.ghost{background:#1f2937;color:#fff}
+        .btn.warn{background:#ff6b6b;color:#fff}
+        .flex{display:flex;gap:8px;flex-wrap:wrap; align-items: center;}
+        .hidden{display:none!important}
+        select,input,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #334155;background:#071026;color:#fff}
+        .col{display:flex;flex-direction:column;gap:10px}
+        .card{background:var(--card);padding:12px;border-radius:10px;border:1px solid #1f2937}
+        .message{padding:10px;border-radius:8px;margin-top:8px}
+        .success{background:#065f46;color:#fff}
+        .error{background:#7f1d1d;color:#fff}
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--neon-black);
-            color: var(--white-text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 600px;
-            padding: 2rem;
-            background: rgba(30, 30, 30, 0.8);
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            border: 2px solid var(--blue-glow); /* Blue glow border */
-            position: relative;
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* Main heading style - SGS EXAM CRACKER se */
-        h1 {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            background-color: var(--red-glow);
-            color: var(--neon-black);
-            text-shadow: 0 0 10px var(--blue-glow), 0 0 20px rgba(0, 191, 255, 0.5);
-            padding: 5px 10px;
-            border-radius: 5px;
-            margin-bottom: 2rem; 
-            animation: neonGlowBlue 1.5s ease-in-out infinite alternate;
-        }
-
-        /* Animations for glowing effect */
-        @keyframes neonGlowBlue {
-            from { text-shadow: 0 0 10px var(--blue-glow), 0 0 20px rgba(0, 191, 255, 0.5); }
-            to { text-shadow: 0 0 15px var(--blue-glow), 0 0 30px rgba(0, 191, 255, 0.8); }
-        }
-
-        .btn-container {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 15px;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-
-        .btn {
-            padding: 15px 25px;
-            font-size: 18px;
-            font-weight: 600;
-            border: none;
-            border-radius: 25px; /* More rounded */
-            background-color: var(--yellow-glow); /* Yellow for main buttons */
-            color: var(--neon-black);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 5px var(--yellow-glow), 0 0 10px rgba(255, 234, 0, 0.5);
-            width: 100%;
-            max-width: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            line-height: 1.2;
-        }
-        
-        .btn:hover {
-            transform: scale(1.05);
-            background-color: #ffe600;
-            box-shadow: 0 0 10px var(--yellow-glow), 0 0 20px rgba(255, 234, 0, 0.8);
-        }
-
-        .btn.blue {
-            background-color: var(--blue-glow); /* Blue buttons for subjects */
-            box-shadow: 0 0 5px var(--blue-glow), 0 0 10px rgba(0, 191, 255, 0.5);
-        }
-        .btn.blue:hover {
-            background-color: #00c8ff;
-            box-shadow: 0 0 10px var(--blue-glow), 0 0 20px rgba(0, 191, 255, 0.8);
-        }
-
-        #ssc-gd-btn {
-            font-size: 24px;
-            height: 150px;
-            width: 150px;
-            border-radius: 20px;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .emoji {
-            font-size: 28px;
-        }
-        
-        .subject-btn, .chapter-btn {
-            width: 80%;
-            padding: 12px;
-            background-color: var(--blue-glow); /* All sub-buttons are blue */
-            box-shadow: 0 0 5px var(--blue-glow), 0 0 10px rgba(0, 191, 255, 0.5);
-        }
-        .subject-btn:hover, .chapter-btn:hover {
-            background-color: #00c8ff;
-            box-shadow: 0 0 10px var(--blue-glow), 0 0 20px rgba(0, 191, 255, 0.8);
-        }
-
-        .content-container {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            text-align: left;
-            padding: 10px;
-            overflow-y: auto;
-        }
-
-        .link-item {
-            background-color: #2c2c2c;
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 5px solid var(--blue-glow); /* Blue glow border */
-            box-shadow: 0 2px 10px rgba(0, 191, 255, 0.1);
-        }
-
-        .link-item h3 {
-            color: var(--yellow-glow); /* Yellow glow title */
-            text-shadow: 0 0 5px var(--yellow-glow);
-            margin-top: 0;
-        }
-
-        .link-actions {
-            margin-top: 10px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .link-actions a {
-            padding: 8px 15px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-
-        .view-btn {
-            background-color: #007bff;
-            color: #fff;
-        }
-
-        .view-btn:hover {
-            background-color: #0056b3;
-        }
-
-        .download-btn {
-            background-color: #28a745;
-            color: #fff;
-        }
-
-        .download-btn:hover {
-            background-color: #1e7e34;
-        }
-
-        /* Hide/Show logic */
-        .hidden {
-            display: none !important;
-        }
+        /* chapters list scroll */
+        .chapter-list{display:flex;flex-direction:column;gap:8px;margin-top:12px;max-height:52vh;overflow:auto;padding-right:6px}
+        .chapter-list .btn{width:100%;text-align:left;padding:10px;border-radius:8px}
+        .question-box{background:#071026;padding:12px;border-radius:8px;margin-top:10px}
+        .question-list-item{display:flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px solid #334155;}
+        .question-list-item .btn {padding: 6px 10px;}
     </style>
 </head>
 <body>
+  <div class="wrap">
+    <h1 id="main-title">SSC GD QUIZ APP</h1>
 
-<div class="container">
-    <div id="main-screen" class="btn-container">
-        <h1>SSC GD PDF Hub</h1>
-        <button id="ssc-gd-btn" class="btn">
-            <span class="emoji">📚</span>
-            <span>SSC GD</span>
-        </button>
+    <!-- MAIN SCREEN -->
+    <div id="main-screen" class="col">
+      <div class="flex" style="margin-bottom:12px">
+        <button id="ssc-gd-btn" class="btn">📚 SSC GD</button>
+        <button id="admin-login-btn" class="btn warn">⚙️ Admin Login</button>
+      </div>
     </div>
 
-    <div id="all-class-pdf-screen" class="btn-container hidden">
-        <h1>ALL CLASS PDF'S</h1>
-        <button id="all-class-pdf-btn" class="btn">
-            <span class="emoji">📂</span>
-            <span>PDF'S</span>
-        </button>
+    <!-- SUBJECT SCREEN -->
+    <div id="subject-screen" class="col hidden">
+      <div class="flex">
+        <button id="hindi-btn" class="btn ghost">🇮🇳 हिंदी</button>
+        <button id="math-btn" class="btn ghost">➕ गणित</button>
+        <button id="reasoning-btn" class="btn ghost">🧠 रीज़निंग</button>
+        <button id="gk-gs-btn" class="btn ghost">🌍 GK/GS</button>
+      </div>
     </div>
 
-    <div id="subject-screen" class="btn-container hidden">
-        <h1>Subjects</h1>
-        <button id="hindi-btn" class="btn subject-btn"><span class="emoji"></span> HINDI</button>
-        <button id="math-btn" class="btn subject-btn"><span class="emoji">➕</span> MATH</button>
-        <button id="reasoning-btn" class="btn subject-btn"><span class="emoji">🧠</span> REASONING</button>
-        <button id="gk-gs-btn" class="btn subject-btn"><span class="emoji">🌍</span> GK/GS</button>
+    <!-- CHAPTERS SCREEN -->
+    <div id="chapters-screen" class="col hidden"></div>
+
+    <!-- QUESTIONS SCREEN -->
+    <div id="questions-screen" class="col hidden"></div>
+
+    <!-- ADMIN LOGIN SCREEN -->
+    <div id="admin-login-screen" class="col hidden">
+      <div class="card" style="max-width:480px">
+        <label>ईमेल</label>
+        <input id="admin-email" type="email" placeholder="ईमेल दर्ज करें" />
+        <label>पासवर्ड</label>
+        <input id="admin-password" type="password" placeholder="पासवर्ड दर्ज करें" />
+        <div class="flex" style="margin-top:8px">
+          <button id="login-btn" class="btn">लॉगिन करें</button>
+          <button id="back-to-main-from-login" class="btn ghost">← वापस</button>
+        </div>
+        <div id="login-message" class="message hidden"></div>
+      </div>
     </div>
 
-    <div id="hindi-chapters-screen" class="btn-container hidden"></div>
-    <div id="math-chapters-screen" class="btn-container hidden"></div>
-    <div id="reasoning-chapters-screen" class="btn-container hidden"></div>
-    <div id="gk-gs-chapters-screen" class="btn-container hidden"></div>
+    <!-- ADMIN PANEL SCREEN -->
+    <div id="admin-panel-screen" class="col hidden">
+      <div class="card" style="max-width:860px">
+        <h3>प्रश्न अपलोड / मैनेज करें</h3>
+        <div class="col" style="margin-top:8px">
+          <label>सब्जेक्ट चुनें</label>
+          <select id="subject-select"></select>
 
-    <div id="content-screen" class="content-container hidden">
-        <h2 id="content-title"></h2>
-        <!-- PDF links will be dynamically added here -->
+          <label>चैप्टर चुनें</label>
+          <select id="chapter-select"></select>
+
+          <label>प्रश्न</label>
+          <textarea id="question-text" rows="3" placeholder="प्रश्न यहाँ लिखें"></textarea>
+
+          <label>सही उत्तर</label>
+          <input id="answer-text" type="text" placeholder="सही उत्तर" />
+
+          <label>विवरण (वैकल्पिक)</label>
+          <textarea id="description-text" rows="2" placeholder="विवरण"></textarea>
+
+          <input type="hidden" id="question-key-input" />
+          
+          <div class="flex">
+            <button id="upload-question-btn" class="btn">प्रश्न अपलोड करें</button>
+            <button id="update-question-btn" class="btn hidden">प्रश्न अपडेट करें</button>
+            <button id="cancel-edit-btn" class="btn ghost hidden">कैंसिल</button>
+            <button id="back-to-main-from-admin" class="btn ghost">← वापस</button>
+          </div>
+
+          <div id="upload-message" class="message hidden"></div>
+        </div>
+
+        <div id="questions-list-container" class="col" style="margin-top:20px;">
+          <h4>मौजूदा प्रश्न</h4>
+          <div id="questions-list">कोई प्रश्न उपलब्ध नहीं।</div>
+        </div>
+      </div>
     </div>
-</div>
+
+  </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Get all the screen elements
-        const screens = {
-            main: document.getElementById('main-screen'),
-            allClassPdf: document.getElementById('all-class-pdf-screen'),
-            subject: document.getElementById('subject-screen'),
-            hindiChapters: document.getElementById('hindi-chapters-screen'),
-            mathChapters: document.getElementById('math-chapters-screen'),
-            reasoningChapters: document.getElementById('reasoning-chapters-screen'),
-            gkGsChapters: document.getElementById('gk-gs-chapters-screen'),
-            content: document.getElementById('content-screen')
-        };
-        const mainTitle = document.querySelector('#main-screen h1');
+/* ========== Firebase config ========== */
+const firebaseConfig = {
+  apiKey: "AIzaSyAYyEHrGV1Ev1FaMO5U3qkHUmdNEHP_IX8",
+  authDomain: "sgs-study-hub.firebaseapp.com",
+  databaseURL: "https://sgs-study-hub-default-rtdb.firebaseio.com",
+  projectId: "sgs-study-hub",
+  storageBucket: "sgs-study-hub.firebasestorage.app",
+  messagingSenderId: "299932841646",
+  appId: "1:299932841646:web:21120e316a9b3134a1df3f"
+};
+try { firebase.initializeApp(firebaseConfig); console.log('Firebase init OK'); } catch(e){ console.error(e); }
+const auth = firebase.auth();
+const db = firebase.database();
 
-        // Get button elements
-        const sscGDBtn = document.getElementById('ssc-gd-btn');
-        const allClassPdfBtn = document.getElementById('all-class-pdf-btn');
-        const hindiBtn = document.getElementById('hindi-btn');
-        const mathBtn = document.getElementById('math-btn');
-        const reasoningBtn = document.getElementById('reasoning-btn');
-        const gkGsBtn = document.getElementById('gk-gs-btn');
-        const contentTitle = document.getElementById('content-title');
+/* ========== UI refs ========== */
+const screens = {
+  main: document.getElementById('main-screen'),
+  subject: document.getElementById('subject-screen'),
+  chapters: document.getElementById('chapters-screen'),
+  questions: document.getElementById('questions-screen'),
+  adminLogin: document.getElementById('admin-login-screen'),
+  adminPanel: document.getElementById('admin-panel-screen')
+};
+const mainTitle = document.getElementById('main-title');
 
-        // Define data for each subject and its chapters
-        const data = {
-            hindi: {
-                title: 'हिंदी PDF’s',
-                chapters: {
-                    'vilom-shabd': { 
-  name: 'विलोम शब्द', 
-  emoji: '🔄', 
-  links: [
-    { 
-      title: 'CLASS 1', 
-      view: 'https://drive.google.com/file/d/1qsVZcEkLmK8jTJzM5JeAJgEPbj5wjj-N/view?usp=drivesdk', 
-      download: 'https://drive.google.com/uc?export=download&id=1qsVZcEkLmK8jTJzM5JeAJgEPbj5wjj-N'  
-    }, 
-    { 
-      title: 'CLASS 2', 
-      view: 'https://drive.google.com/file/d/1Sg2yNwLLavVmrnuNQi7YKWRdZjSfGD3o/view?usp=drivesdk', 
-      download: 'https://drive.google.com/uc?export=download&id=1Sg2yNwLLavVmrnuNQi7YKWRdZjSfGD3o'  
-    }, 
-    { 
-      title: 'CLASS 3', 
-      view: 'https://drive.google.com/file/d/1p9GyJZWQailVHDViH0THeOiZb9PgbPDA/view?usp=drivesdk', 
-      download: 'https://drive.google.com/uc?export=download&id=1p9GyJZWQailVHDViH0THeOiZb9PgbPDA'  
-    }, 
-    { 
-      title: 'CLASS 4', 
-      view: 'https://drive.google.com/file/d/1y2mjFol0jTEnmBwFG5Z_js3V_HaF7wRB/view?usp=drivesdk', 
-      download: 'https://drive.google.com/uc?export=download&id=1y2mjFol0jTEnmBwFG5Z_js3V_HaF7wRB'  
-    }, 
-    { 
-      title: 'CLASS 5', 
-      view: 'https://drive.google.com/file/d/1YA4B7Iyw36mVxkGy6iIbtDb_w_9m5Nxo/view?usp=drivesdk', 
-      download: 'https://drive.google.com/uc?export=download&id=1YA4B7Iyw36mVxkGy6iIbtDb_w_9m5Nxo'  
-    }, 
-    { 
-      title: 'CLASS 6', 
-      view: 'https://drive.google.com/file/d/17UBKaF_bB3BnsURQdQk6_p7AsDKbShAc/view?usp=drivesdk', 
-      download: 'https://drive.google.com/uc?export=download&id=17UBKaF_bB3BnsURQdQk6_p7AsDKbShAc'  
-    } 
-  ] 
-},
-                    'vartaniya': { name: 'वर्तनीय @@', emoji: '✏️', links: [{ title: 'वर्तनीय नियम PDF', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'वर्तनीय अभ्यास प्रश्न', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'vakyansh': { name: 'वाक्यांश', emoji: '📝', links: [{ title: 'वाक्यांश उदाहरण', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'वाक्यांश अभ्यास', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'paryavachi': { name: 'पर्यावची शब्द', emoji: '🌳', links: [{ title: 'पर्यायवाची शब्द नोट्स', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'पर्यायवाची शब्द प्रश्न', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'tatsam-tadbhav': { name: 'तत्सम तद्भव', emoji: '📜', links: [{ title: 'तत्सम तद्भव नोट्स', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'तत्सम तद्भव प्रश्न', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'deshaj-videshaj': { name: 'देशज विदेशद शब्द', emoji: '🗣️', links: [{ title: 'देशज-विदेशज नोट्स', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'देशज-विदेशज अभ्यास', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'abhyash-prashan': { name: 'अभयाश प्राशन तत्सम तद्भव', emoji: '❓', links: [{ title: 'अभ्यास प्रश्न 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'अभ्यास प्रश्न 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'shabd-yugm': { name: 'शब्द युग्म', emoji: '⚖️', links: [{ title: 'शब्द युग्म उदाहरण', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'शब्द युग्म प्रश्न', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'anekarthik': { name: 'अनेकरथिक शब्द', emoji: '🎭', links: [{ title: 'अनेकार्थिक शब्द नोट्स', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'अनेकार्थिक शब्द अभ्यास', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'sangya': { name: 'संज्ञा', emoji: '👤', links: [{ title: 'संज्ञा के प्रकार', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'संज्ञा प्रश्नोत्तरी', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'sarvanam': { name: 'सर्वनाम', emoji: '🤝', links: [{ title: 'सर्वनाम नियम', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'सर्वनाम अभ्यास', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'visheshad': { name: 'विशेषड', emoji: '🌟', links: [{ title: 'विशेषण नोट्स', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'विशेषण प्रश्न', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'kriya': { name: 'क्रिया', emoji: '🏃', links: [{ title: 'क्रिया के भेद', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'क्रिया अभ्यास', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'kaal': { name: 'काल @', emoji: '⏰', links: [{ title: 'काल के नियम', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'काल प्रश्नोत्तरी', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'link': { name: 'लिंक #', emoji: '🔗', links: [{ title: 'लिंग के प्रकार', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'लिंग अभ्यास', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'vachan': { name: 'वचन @', emoji: '👥', links: [{ title: 'वचन के नियम', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'वचन अभ्यास', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'ling-vachan-abhyas': { name: 'लिंग वचन अभ्यास', emoji: '📖', links: [{ title: 'लिंग-वचन अभ्यास 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'लिंग-वचन अभ्यास 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'karak': { name: 'कारक #', emoji: '🎯', links: [{ title: 'कारक के नियम', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'कारक प्रश्न', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'avyay': { name: 'अव्यय #', emoji: '❌', links: [{ title: 'अव्यय के प्रकार', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'अव्यय प्रश्न', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] }
-                }
-            },
-            math: {
-                title: 'गणित PDF’s',
-                chapters: {
-                    'ratio-proporation': { name: 'Ratio & Proporation', emoji: '📈', links: [{ title: 'Ratio & Proporation Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Ratio & Proporation Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'lcm-hcf': { name: 'LCM & HCF', emoji: '🔢', links: [{ title: 'LCM & HCF Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'LCM & HCF Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'time-and-work': { name: 'Time and Work', emoji: '⏱️', links: [{ title: 'Time and Work Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Time and Work Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'pipe-tanki': { name: 'Pipe or Tanki', emoji: '💧', links: [{ title: 'Pipe and Tank Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Pipe and Tank Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'ausat': { name: 'औसत', emoji: '📊', links: [{ title: 'Average Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Average Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'pratishat': { name: 'प्रतिशत', emoji: '💯', links: [{ title: 'Percentage Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Percentage Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'labh-hani': { name: 'लाभ और हानी', emoji: '💰', links: [{ title: 'Profit & Loss Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Profit & Loss Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'batta': { name: 'बट्टा', emoji: '📉', links: [{ title: 'Discount Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Discount Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'sadharan-byaj': { name: 'साधारण ब्याज', emoji: '💵', links: [{ title: 'Simple Interest Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Simple Interest Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'chakravridhhi-byaj': { name: 'चक्रवृद्धि ब्याज', emoji: '🏦', links: [{ title: 'Compound Interest Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Compound Interest Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'samay-chal-duri': { name: 'समय & चल और दूरी', emoji: '🛣️', links: [{ title: 'Time, Speed, Distance Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Time, Speed, Distance Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'relgadi': { name: 'रेलगाड़ी', emoji: '🚂', links: [{ title: 'Trains Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Trains Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'nav-dhara': { name: 'नाव एण्ड धारा', emoji: '⛵', links: [{ title: 'Boats & Streams Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Boats & Streams Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'number-system': { name: 'Number System', emoji: '🔢', links: [{ title: 'Number System Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Number System Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'saralikaran': { name: 'सरलीकरण', emoji: '🧮', links: [{ title: 'Simplification Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Simplification Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'trikonmiti': { name: 'त्रिकोणमिति', emoji: '📐', links: [{ title: 'Trigonometry Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Trigonometry Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] }
-                }
-            },
-            reasoning: {
-                title: 'रीजनिंग PDF’s',
-                chapters: {
-                    'coding-decoding': { name: 'Coding Decoding', emoji: '🧩', links: [{ title: 'Coding Decoding Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Coding Decoding Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'analogy-test': { name: 'Analogy Test', emoji: '🤔', links: [{ title: 'Analogy Test Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Analogy Test Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'ven-arekh': { name: 'वेन आरेख', emoji: '⭕', links: [{ title: 'वेन आरेख उदाहरण', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'वेन आरेख प्रश्न', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'alphabet-test': { name: 'Alphabet Test', emoji: '🔡', links: [{ title: 'Alphabet Test Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Alphabet Test Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'word-formation': { name: 'Word Formation', emoji: '✍️', links: [{ title: 'Word Formation Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Word Formation Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'number-series': { name: 'Number Series', emoji: '🔢', links: [{ title: 'Number Series Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Number Series Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'wrong-number-series': { name: 'Worng Number Series', emoji: '❌', links: [{ title: 'Wrong Number Series Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Wrong Number Series Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'alphabet-series': { name: 'Alphabet series', emoji: '🔤', links: [{ title: 'Alphabet Series Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Alphabet Series Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'repeated-series': { name: 'Repeated Series', emoji: '🔁', links: [{ title: 'Repeated Series Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Repeated Series Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'similar-set': { name: 'Similar Set', emoji: '👯', links: [{ title: 'Similar Set Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Similar Set Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'blood-relation': { name: 'Blood Relation', emoji: '👪', links: [{ title: 'Blood Relation Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Blood Relation Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'mathematical-operations': { name: 'Mathatical Operations', emoji: '✖️', links: [{ title: 'Math Operations Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Math Operations Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'missing-number': { name: 'Missing Number', emoji: '🕵️', links: [{ title: 'Missing Number Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Missing Number Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'classification': { name: 'Classification', emoji: '🗂️', links: [{ title: 'Classification Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Classification Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'ranking-test': { name: 'Ranking Test', emoji: '🥇', links: [{ title: 'Ranking Test Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Ranking Test Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'order-sequence': { name: 'Order Sequence', emoji: '📃', links: [{ title: 'Order Sequence Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Order Sequence Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'seating-arrangement': { name: 'Seating arreangement', emoji: '🪑', links: [{ title: 'Seating Arrangement Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Seating Arrangement Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'pasa': { name: 'पासा', emoji: '🎲', links: [{ title: 'पासा उदाहरण', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'पासा अभ्यास', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'syllogism': { name: 'Syllogism', emoji: '💡', links: [{ title: 'Syllogism Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Syllogism Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'direction': { name: 'Direction', emoji: '🧭', links: [{ title: 'Direction Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Direction Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'mirror-image': { name: 'Mirror & Water Image & Paper Folding or cutting', emoji: '🖼️', links: [{ title: 'Mirror Image Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Water Image Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'figure-completions': { name: 'Figure Completions & Hidden Figure', emoji: '🧩', links: [{ title: 'Figure Completion Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Hidden Figure Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'figure-series': { name: 'Figure Series', emoji: '➡️', links: [{ title: 'Figure Series Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Figure Series Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'miscellaneous': { name: 'Miscellaneous', emoji: '🤔', links: [{ title: 'Miscellaneous Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Miscellaneous Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'figure-counting': { name: 'Figure Counting', emoji: '🔢', links: [{ title: 'Figure Counting Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Figure Counting Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'calendar': { name: 'Calendar', emoji: '🗓️', links: [{ title: 'Calendar Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Calendar Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'clock': { name: 'clock', emoji: '🕰️', links: [{ title: 'Clock Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Clock Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] }
-                }
-            },
-            gkGs: {
-                title: 'GK/GS PDF’s',
-                chapters: {
-                    'geography': { name: 'Geography', emoji: '🗺️', links: [{ title: 'Geography Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Geography Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'physics': { name: 'physics', emoji: '⚛️', links: [{ title: 'Physics Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Physics Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'polity': { name: 'polity', emoji: '🏛️', links: [{ title: 'Polity Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Polity Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'economics': { name: 'economics', emoji: '📊', links: [{ title: 'Economics Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Economics Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'history': { name: 'History', emoji: '📜', links: [{ title: 'History Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'History Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'statik-gk': { name: 'Statik Gk', emoji: '', links: [{ title: 'Statik Gk Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Statik Gk Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] },
-                    'chemistry': { name: 'Chemistry', emoji: '🧪', links: [{ title: 'Chemistry Example 1', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }, { title: 'Chemistry Practice 2', view: 'https://www.orimi.com/pdf-test.pdf', download: 'https://www.orimi.com/pdf-test.pdf' }] }
-                }
-            }
-        };
+const sscGDBtn = document.getElementById('ssc-gd-btn');
+const adminLoginBtn = document.getElementById('admin-login-btn');
 
-        // Function to show a specific screen and hide others
-        function showScreen(screenId, title = '') {
-            Object.values(screens).forEach(screen => screen.classList.add('hidden'));
-            screens[screenId].classList.remove('hidden');
-            // Update main heading based on screen
-            if (title) {
-                mainTitle.textContent = title;
-            } else {
-                mainTitle.textContent = 'SSC GD PDF Hub';
-            }
-        }
+const hindiBtn = document.getElementById('hindi-btn');
+const mathBtn = document.getElementById('math-btn');
+const reasoningBtn = document.getElementById('reasoning-btn');
+const gkGsBtn = document.getElementById('gk-gs-btn');
 
-        // Function to render chapter buttons for a subject
-        function renderChapters(subjectKey) {
-            const subjectData = data[subjectKey];
-            const chapterScreen = screens[`${subjectKey}Chapters`];
-            chapterScreen.innerHTML = `<h1>${subjectData.title}</h1>`; // Add subject title to the screen
-            
-            for (const key in subjectData.chapters) {
-                if (subjectData.chapters.hasOwnProperty(key)) {
-                    const chapter = subjectData.chapters[key];
-                    const button = document.createElement('button');
-                    button.className = 'btn chapter-btn blue';
-                    button.innerHTML = `<span class="emoji">${chapter.emoji}</span><span>${chapter.name}</span>`;
-                    button.addEventListener('click', () => {
-                        showScreen('content');
-                        renderLinks(subjectKey, key);
-                        history.pushState({ screen: 'content', subject: subjectKey, chapter: key }, '', '');
-                    });
-                    chapterScreen.appendChild(button);
-                }
-            }
-        }
-        
-        // Function to render PDF links for a specific chapter
-        function renderLinks(subjectKey, chapterKey) {
-            const links = data[subjectKey].chapters[chapterKey].links;
-            const contentContainer = screens.content;
-            contentContainer.innerHTML = ''; // Clear previous content
+const subjectSelect = document.getElementById('subject-select');
+const chapterSelect = document.getElementById('chapter-select');
+const questionText = document.getElementById('question-text');
+const answerText = document.getElementById('answer-text');
+const descriptionText = document.getElementById('description-text');
+const uploadQuestionBtn = document.getElementById('upload-question-btn');
+const updateQuestionBtn = document.getElementById('update-question-btn');
+const cancelEditBtn = document.getElementById('cancel-edit-btn');
+const uploadMessage = document.getElementById('upload-message');
+const questionsListContainer = document.getElementById('questions-list-container');
+const questionsList = document.getElementById('questions-list');
+const questionKeyInput = document.getElementById('question-key-input');
 
-            const title = document.createElement('h1');
-            title.textContent = data[subjectKey].chapters[chapterKey].name;
-            contentContainer.appendChild(title);
-            
-            links.forEach(link => {
-                const linkItem = document.createElement('div');
-                linkItem.className = 'link-item';
-                linkItem.innerHTML = `
-                    <h3>${link.title}</h3>
-                    <div class="link-actions">
-                        <a href="${link.view}" class="btn view-btn" target="_blank">View</a>
-                        <a href="${link.download}" class="btn download-btn" download>Download</a>
-                    </div>
-                `;
-                contentContainer.appendChild(linkItem);
-            });
-        }
+const loginBtn = document.getElementById('login-btn');
+const adminEmailInput = document.getElementById('admin-email');
+const adminPasswordInput = document.getElementById('admin-password');
+const loginMessage = document.getElementById('login-message');
+const backToMainFromLogin = document.getElementById('back-to-main-from-login');
+const backToMainFromAdmin = document.getElementById('back-to-main-from-admin');
 
-        // Event Listeners for main buttons
-        sscGDBtn.addEventListener('click', () => {
-            showScreen('allClassPdf', 'ALL CLASS PDF\'S');
-            history.pushState({ screen: 'allClassPdf' }, '', '');
-        });
+/* ========== Data ========== */
+const subjectsData = {
+    hindi: { name: 'हिंदी', emoji: '🇮🇳' },
+    math: { name: 'गणित', emoji: '➕' },
+    reasoning: { name: 'रीज़निंग', emoji: '🧠' },
+    gkGs: { name: 'GK/GS', emoji: '🌍' }
+};
+const chaptersData = {
+    hindi: {
+        'vilom-shabd': 'विलोम शब्द',
+        'vartaniya': 'वर्तनीय',
+        'vakyansh': 'वाक्यांश',
+        'paryavachi': 'पर्यावची शब्द',
+        'tatsam-tadbhav': 'तत्सम तद्भव',
+        'deshaj-videshaj': 'देशज विदेशद शब्द',
+        'abhyash-prashan': 'अभयाश प्राशन तत्सम तद्भव',
+        'shabd-yugm': 'शब्द युग्म',
+        'anekarthik': 'अनेकरथिक शब्द',
+        'sangya': 'संज्ञा',
+        'sarvanam': 'सर्वनाम',
+        'visheshad': 'विशेषड',
+        'kriya': 'क्रिया',
+        'kaal': 'काल',
+        'link': 'लिंक',
+        'vachan': 'वचन',
+        'ling-vachan-abhyas': 'लिंग वचन अभ्यास',
+        'karak': 'कारक',
+        'avyay': 'अव्यय'
+    },
+    math: {
+        'ratio-proporation': 'Ratio & Proporation',
+        'lcm-hcf': 'LCM & HCF',
+        'time-and-work': 'Time and Work',
+        'pipe-tanki': 'Pipe or Tanki',
+        'ausat': 'औसत',
+        'pratishat': 'प्रतिशत',
+        'labh-hani': 'लाभ और हानी',
+        'batta': 'बट्टा',
+        'sadharan-byaj': 'साधारण ब्याज',
+        'chakravridhhi-byaj': 'चक्रवृद्धि ब्याज',
+        'samay-chal-duri': 'समय & चल और दूरी',
+        'relgadi': 'रेलगाड़ी',
+        'nav-dhara': 'नाव एण्ड धारा',
+        'number-system': 'Number System',
+        'saralikaran': 'सरलीकरण',
+        'trikonmiti': 'त्रिकोणमिति'
+    },
+    reasoning: {
+        'coding-decoding': 'Coding Decoding',
+        'analogy-test': 'Analogy Test',
+        'ven-arekh': 'वेन आरेख',
+        'alphabet-test': 'Alphabet Test',
+        'word-formation': 'Word Formation',
+        'number-series': 'Number Series',
+        'wrong-number-series': 'Worng Number Series',
+        'alphabet-series': 'Alphabet series',
+        'repeated-series': 'Repeated Series',
+        'similar-set': 'Similar Set',
+        'blood-relation': 'Blood Relation',
+        'mathematical-operations': 'Mathatical Operations',
+        'missing-number': 'Missing Number',
+        'classification': 'Classification',
+        'ranking-test': 'Ranking Test',
+        'order-sequence': 'Order Sequence',
+        'seating-arrangement': 'Seating arreangement',
+        'pasa': 'पासा',
+        'syllogism': 'Syllogism',
+        'direction': 'Direction',
+        'mirror-image': 'Mirror & Water Image & Paper Folding or cutting',
+        'figure-completions': 'Figure Completions & Hidden Figure',
+        'figure-series': 'Figure Series',
+        'miscellaneous': 'Miscellaneous',
+        'figure-counting': 'Figure Counting',
+        'calendar': 'Calendar',
+        'clock': 'clock'
+    },
+    gkGs: {
+        'geography': 'Geography',
+        'physics': 'physics',
+        'polity': 'polity',
+        'economics': 'economics',
+        'history': 'History',
+        'statik-gk': 'Statik Gk',
+        'chemistry': 'Chemistry'
+    }
+};
 
-        allClassPdfBtn.addEventListener('click', () => {
-            showScreen('subject', 'Subjects');
-            history.pushState({ screen: 'subject' }, '', '');
-        });
+/* ========== helpers ========== */
+function show(screenKey, title) {
+  Object.values(screens).forEach(el => el.classList.add('hidden'));
+  if (screens[screenKey]) screens[screenKey].classList.remove('hidden');
+  mainTitle.textContent = title || 'SSC GD QUIZ APP';
+}
+function setMessage(el, text, type='') {
+  if (!el) return;
+  el.textContent = text;
+  el.className = 'message ' + (type==='success' ? 'success' : type==='error' ? 'error' : '');
+  el.classList.remove('hidden');
+}
+function clearMessage(el) {
+  if (!el) return;
+  el.textContent = '';
+  el.className = 'message hidden';
+}
+function escapeHtml(s){ if (s===undefined || s===null) return ''; return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
 
-        // Event Listeners for subject buttons
-        hindiBtn.addEventListener('click', () => {
-            renderChapters('hindi');
-            showScreen('hindiChapters', data.hindi.title);
-            history.pushState({ screen: 'hindiChapters', subject: 'hindi' }, '', '');
-        });
-        mathBtn.addEventListener('click', () => {
-            renderChapters('math');
-            showScreen('mathChapters', data.math.title);
-            history.pushState({ screen: 'mathChapters', subject: 'math' }, '', '');
-        });
-        reasoningBtn.addEventListener('click', () => {
-            renderChapters('reasoning');
-            showScreen('reasoningChapters', data.reasoning.title);
-            history.pushState({ screen: 'reasoningChapters', subject: 'reasoning' }, '', '');
-        });
-        gkGsBtn.addEventListener('click', () => {
-            renderChapters('gkGs');
-            showScreen('gkGsChapters', data.gkGs.title);
-            history.pushState({ screen: 'gkGsChapters', subject: 'gkGs' }, '', '');
-        });
+/* ========== render chapters ========== */
+function renderChapters(subjectKey) {
+  const container = screens.chapters;
+  container.innerHTML = '';
+  // back button
+  const back = document.createElement('button');
+  back.className = 'btn ghost';
+  back.textContent = '← वापस जाएं';
+  back.addEventListener('click', () => {
+    show('subject','Subjects');
+    history.pushState({screen:'subject'},'', '');
+  });
+  container.appendChild(back);
 
-        // Browser back button functionality
-        window.addEventListener('popstate', (event) => {
-            if (event.state) {
-                switch(event.state.screen) {
-                    case 'main':
-                        showScreen('main');
-                        break;
-                    case 'allClassPdf':
-                        showScreen('allClassPdf', 'ALL CLASS PDF\'S');
-                        break;
-                    case 'subject':
-                        showScreen('subject', 'Subjects');
-                        break;
-                    case 'hindiChapters':
-                    case 'mathChapters':
-                    case 'reasoningChapters':
-                    case 'gkGsChapters':
-                        showScreen(event.state.screen, data[event.state.subject].title);
-                        renderChapters(event.state.subject);
-                        break;
-                    case 'content':
-                        showScreen('content');
-                        renderLinks(event.state.subject, event.state.chapter);
-                        break;
-                    default:
-                        showScreen('main');
-                }
-            } else {
-                showScreen('main');
-            }
-        });
-        
-        // Initial app load
-        window.addEventListener('load', () => {
-             showScreen('main');
-             history.replaceState({ screen: 'main' }, '', '');
-        });
+  // chapter list (scrollable)
+  const listDiv = document.createElement('div');
+  listDiv.className = 'chapter-list';
+  container.appendChild(listDiv);
+
+  const chapterObj = chaptersData[subjectKey] || {};
+  for (const key in chapterObj) {
+    if (chapterObj.hasOwnProperty(key)) {
+      const chapterName = chapterObj[key];
+      const button = document.createElement('button');
+      button.className = 'btn';
+      button.innerHTML = `<span>${chapterName}</span>`;
+      button.addEventListener('click', () => {
+        show('questions', chapterName);
+        fetchQuestions(subjectKey, key);
+        history.pushState({ screen: 'questions', subject: subjectKey, chapter: key }, '', '');
+      });
+      listDiv.appendChild(button);
+    }
+  }
+
+  show('chapters', subjectsData[subjectKey] ? subjectsData[subjectKey].name : 'Chapters');
+}
+
+/* ========== fetch & show questions ========== */
+let currentQuestions = [];
+let currentIndex = 0;
+let currentRef = null;
+
+function fetchQuestions(subjectKey, chapterKey) {
+  const qScreen = screens.questions;
+  qScreen.innerHTML = '<div class="card">Loading questions...</div>';
+  if (currentRef) { try { currentRef.off('value'); } catch(e){} currentRef = null; }
+
+  const ref = db.ref(`questions/${subjectKey}/${chapterKey}`);
+  currentRef = ref;
+  ref.once('value')
+    .then(snapshot => {
+      const data = snapshot.val();
+      if (!data) {
+        qScreen.innerHTML = '<div class="message error">इस चैप्टर के लिए अभी कोई प्रश्न उपलब्ध नहीं।</div>';
+        return;
+      }
+      currentQuestions = Object.values(data);
+      currentIndex = 0;
+      showQuestion(currentQuestions[currentIndex], subjectKey, chapterKey);
+    })
+    .catch(err => {
+      console.error('fetch err', err);
+      qScreen.innerHTML = '<div class="message error">प्रश्न लाने में त्रुटि।</div>';
     });
-</script>
 
+  ref.on('value', snap => {
+    const d = snap.val() || {};
+    currentQuestions = Object.values(d);
+  });
+}
+
+function showQuestion(qObj, subjectKey, chapterKey) {
+  const qScreen = screens.questions;
+  if (!qObj) { qScreen.innerHTML = '<div class="message">कोई प्रश्न नहीं।</div>'; return; }
+
+  qScreen.innerHTML = `
+    <div class="question-box">
+      <div><strong>${currentIndex+1}.</strong> ${escapeHtml(qObj.question || '')}</div>
+      <div style="margin-top:10px"><button class="btn ghost option-btn">${escapeHtml(qObj.answer || '')}</button></div>
+    </div>
+    <div id="desc-box" class="card hidden" style="margin-top:10px"><strong>विवरण:</strong><div>${escapeHtml(qObj.description || 'कोई विवरण नहीं।')}</div></div>
+    <div style="margin-top:10px" class="flex">
+      <button id="toggle-details-btn" class="btn">विवरण देखें</button>
+      <button id="prev-q-btn" class="btn ghost">पिछला प्रश्न</button>
+      <button id="next-q-btn" class="btn">अगला प्रश्न</button>
+      <button id="back-to-chapters" class="btn ghost">← चैप्टर</button>
+    </div>
+  `;
+  
+  const toggleBtn = document.getElementById('toggle-details-btn');
+  const prevBtn = document.getElementById('prev-q-btn');
+  const nextBtn = document.getElementById('next-q-btn');
+  const backBtn = document.getElementById('back-to-chapters');
+  const descBox = document.getElementById('desc-box');
+  const optionBtn = qScreen.querySelector('.option-btn');
+
+  // "विवरण देखें" button functionality (toggle)
+  toggleBtn.addEventListener('click', () => {
+    const isVisible = !descBox.classList.contains('hidden');
+    if (isVisible) {
+      descBox.classList.add('hidden');
+      optionBtn.classList.remove('hidden');
+      toggleBtn.textContent = 'विवरण देखें';
+    } else {
+      descBox.classList.remove('hidden');
+      optionBtn.classList.add('hidden');
+      toggleBtn.textContent = 'विवरण छुपाएं';
+    }
+  });
+
+  // "Previous Question" button functionality
+  prevBtn.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      showQuestion(currentQuestions[currentIndex], subjectKey, chapterKey);
+    }
+  });
+  
+  // Disable "Previous" button on first question
+  if (currentIndex === 0) {
+      prevBtn.disabled = true;
+      prevBtn.style.opacity = '0.5';
+  } else {
+      prevBtn.disabled = false;
+      prevBtn.style.opacity = '1';
+  }
+
+  // "Next Question" button functionality
+  nextBtn.addEventListener('click', () => {
+    currentIndex++;
+    if (currentIndex < currentQuestions.length) {
+      showQuestion(currentQuestions[currentIndex], subjectKey, chapterKey);
+    } else {
+      qScreen.innerHTML = `
+        <div class="message">सभी प्रश्न पूरे हो गए!</div>
+        <button id="restart-btn" class="btn" style="margin-top:10px">शुरू से शुरू करें</button>
+      `;
+      document.getElementById('restart-btn').addEventListener('click', () => { 
+        currentIndex=0; 
+        showQuestion(currentQuestions[currentIndex], subjectKey, chapterKey); 
+      });
+    }
+  });
+
+  // "Back to Chapters" button functionality
+  backBtn.addEventListener('click', () => { history.back(); });
+}
+
+/* ========== Admin Panel functionalities ========== */
+function populateAdminDropdowns() {
+  subjectSelect.innerHTML = '<option value="">-- सब्जेक्ट चुनें --</option>';
+  chapterSelect.innerHTML = '<option value="">-- चैप्टर चुनें --</option>';
+  questionsList.innerHTML = 'कोई प्रश्न उपलब्ध नहीं।';
+  questionsListContainer.classList.add('hidden');
+
+  for (const key in subjectsData) {
+    const o = document.createElement('option');
+    o.value = key;
+    o.textContent = subjectsData[key].name;
+    subjectSelect.appendChild(o);
+  }
+  subjectSelect.onchange = function() {
+    chapterSelect.innerHTML = '<option value="">-- चैप्टर चुनें --</option>';
+    questionsList.innerHTML = 'कोई प्रश्न उपलब्ध नहीं।';
+    questionsListContainer.classList.add('hidden');
+    const sel = this.value;
+    if (sel && chaptersData[sel]) {
+      for (const c in chaptersData[sel]) {
+        const op = document.createElement('option');
+        op.value = c;
+        op.textContent = chaptersData[sel][c];
+        chapterSelect.appendChild(op);
+      }
+    }
+  };
+  chapterSelect.onchange = fetchQuestionsForAdmin;
+}
+
+function fetchQuestionsForAdmin() {
+  const subject = subjectSelect.value;
+  const chapter = chapterSelect.value;
+  questionsList.innerHTML = 'लोड हो रहा है...';
+  questionsListContainer.classList.remove('hidden');
+
+  if (!subject || !chapter) {
+    questionsList.innerHTML = 'कृपया सब्जेक्ट और चैप्टर चुनें।';
+    return;
+  }
+
+  const ref = db.ref(`questions/${subject}/${chapter}`);
+  ref.on('value', snapshot => {
+    const data = snapshot.val();
+    questionsList.innerHTML = '';
+    if (!data) {
+      questionsList.innerHTML = 'कोई प्रश्न उपलब्ध नहीं।';
+      return;
+    }
+    
+    for (const key in data) {
+      const q = data[key];
+      const div = document.createElement('div');
+      div.className = 'question-list-item';
+      div.innerHTML = `
+        <span>${escapeHtml(q.question)}</span>
+        <div class="flex">
+          <button class="btn" onclick="editQuestion('${key}', '${subject}', '${chapter}')">एडिट</button>
+          <button class="btn warn" onclick="deleteQuestion('${key}', '${subject}', '${chapter}')">डिलीट</button>
+        </div>
+      `;
+      questionsList.appendChild(div);
+    }
+  });
+}
+
+function resetAdminForm() {
+    questionText.value = '';
+    answerText.value = '';
+    descriptionText.value = '';
+    questionKeyInput.value = '';
+    uploadQuestionBtn.classList.remove('hidden');
+    updateQuestionBtn.classList.add('hidden');
+    cancelEditBtn.classList.add('hidden');
+    setMessage(uploadMessage, '');
+}
+
+function editQuestion(key, subject, chapter) {
+    db.ref(`questions/${subject}/${chapter}/${key}`).once('value', snapshot => {
+        const q = snapshot.val();
+        if (q) {
+            questionKeyInput.value = key;
+            questionText.value = q.question;
+            answerText.value = q.answer;
+            descriptionText.value = q.description || '';
+            uploadQuestionBtn.classList.add('hidden');
+            updateQuestionBtn.classList.remove('hidden');
+            cancelEditBtn.classList.remove('hidden');
+        }
+    });
+}
+
+function deleteQuestion(key, subject, chapter) {
+    if (confirm('क्या आप सच में इस प्रश्न को हटाना चाहते हैं?')) {
+        db.ref(`questions/${subject}/${chapter}/${key}`).remove()
+            .then(() => setMessage(uploadMessage, 'प्रश्न सफलतापूर्वक हटा दिया गया।', 'success'))
+            .catch(err => setMessage(uploadMessage, 'हटाने में त्रुटि: ' + err.message, 'error'));
+    }
+}
+
+uploadQuestionBtn.addEventListener('click', () => {
+  const subject = subjectSelect.value;
+  const chapter = chapterSelect.value;
+  const question = questionText.value.trim();
+  const answer = answerText.value.trim();
+  const description = descriptionText.value.trim();
+
+  if (!subject || !chapter || !question || !answer) {
+    setMessage(uploadMessage, 'कृपया सभी आवश्यक फ़ील्ड भरें।', 'error'); return;
+  }
+
+  const payload = { question, answer, description: description||null, createdAt: Date.now() };
+  db.ref(`questions/${subject}/${chapter}`).push(payload)
+    .then(()=>{ setMessage(uploadMessage, 'प्रश्न सफलतापूर्वक अपलोड हो गया!', 'success'); resetAdminForm(); })
+    .catch(err=>{ console.error('upload err', err); setMessage(uploadMessage, 'अपलोड त्रुटि: '+(err.message||err),'error'); });
+});
+
+updateQuestionBtn.addEventListener('click', () => {
+  const subject = subjectSelect.value;
+  const chapter = chapterSelect.value;
+  const key = questionKeyInput.value;
+  const question = questionText.value.trim();
+  const answer = answerText.value.trim();
+  const description = descriptionText.value.trim();
+
+  if (!subject || !chapter || !key || !question || !answer) {
+    setMessage(uploadMessage, 'कृपया सभी आवश्यक फ़ील्ड भरें।', 'error'); return;
+  }
+
+  const payload = { question, answer, description: description||null };
+  db.ref(`questions/${subject}/${chapter}/${key}`).update(payload)
+    .then(()=>{ setMessage(uploadMessage, 'प्रश्न सफलतापूर्वक अपडेट हो गया!', 'success'); resetAdminForm(); })
+    .catch(err=>{ console.error('update err', err); setMessage(uploadMessage, 'अपडेट त्रुटि: '+(err.message||err),'error'); });
+});
+
+cancelEditBtn.addEventListener('click', resetAdminForm);
+
+/* ========== initial bindings ========== */
+window.addEventListener('DOMContentLoaded', () => {
+  // main nav
+  sscGDBtn.addEventListener('click', ()=>{ show('subject','Subjects'); history.pushState({screen:'subject'},'', ''); });
+  adminLoginBtn.addEventListener('click', ()=>{ show('adminLogin','एडमिन लॉगिन'); history.pushState({screen:'adminLogin'},'', ''); });
+
+  // subject buttons
+  if (hindiBtn) hindiBtn.addEventListener('click', ()=>{ renderChapters('hindi'); history.pushState({screen:'chapters',subject:'hindi'},'', ''); });
+  if (mathBtn) mathBtn.addEventListener('click', ()=>{ renderChapters('math'); history.pushState({screen:'chapters',subject:'math'},'', ''); });
+  if (reasoningBtn) reasoningBtn.addEventListener('click', ()=>{ renderChapters('reasoning'); history.pushState({screen:'chapters',subject:'reasoning'},'', ''); });
+  if (gkGsBtn) gkGsBtn.addEventListener('click', ()=>{ renderChapters('gkGs'); history.pushState({screen:'chapters',subject:'gkGs'},'', ''); });
+
+  // admin nav
+  backToMainFromLogin.addEventListener('click', ()=>{ show('main'); history.pushState({screen:'main'},'', ''); });
+  backToMainFromAdmin.addEventListener('click', ()=>{ show('main'); history.pushState({screen:'main'},'', ''); });
+
+  // admin login (local)
+  const ADMIN_EMAIL = "sachinkumarjii753@gmail.com";
+  const ADMIN_PASS = "Sachin@802165";
+  loginBtn.addEventListener('click', ()=> {
+    const e = adminEmailInput.value.trim(); const p = adminPasswordInput.value;
+    if (e === ADMIN_EMAIL && p === ADMIN_PASS) { populateAdminDropdowns(); show('adminPanel','एडमिन पैनल'); clearMessage(loginMessage); history.pushState({screen:'adminPanel'},'', ''); }
+    else setMessage(loginMessage, 'गलत ईमेल या पासवर्ड।', 'error');
+  });
+
+  // anonymous auth
+  auth.signInAnonymously().then(()=>console.log('anon signed in')).catch(err=>console.warn('anon sign-in failed',err));
+
+  // start
+  show('main');
+  history.replaceState({screen:'main'},'', '');
+});
+
+/* ========== popstate ========== */
+window.addEventListener('popstate', (e) => {
+  const s = e.state;
+  if (!s) { show('main'); return; }
+  if (s.screen === 'main') show('main');
+  else if (s.screen === 'subject') show('subject','Subjects');
+  else if (s.screen === 'chapters') renderChapters(s.subject);
+  else if (s.screen === 'questions') fetchQuestions(s.subject, s.chapter);
+  else if (s.screen === 'adminLogin') show('adminLogin','एडमिन लॉगिन');
+  else if (s.screen === 'adminPanel') { populateAdminDropdowns(); show('adminPanel','एडमिन पैनल'); }
+});
+</script>
 </body>
 </html>
