@@ -309,120 +309,125 @@
     </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1 id="main-title">SSC GD QUIZ APP</h1>
+    <div class="wrap">
+        <h1 id="main-title">SSC GD QUIZ APP</h1>
 
-    <!-- MAIN SCREEN -->
-    <div id="main-screen" class="col centered">
-      <div class="flex centered" style="margin-bottom:12px; flex-direction: column;">
-        <button id="ssc-gd-btn" class="btn">
-            <i class="fa-solid fa-graduation-cap mr-2"></i>
-            📚 SSC GD
-        </button>
-        <!-- The requested "छोटे से बटन" below SSC GD button -->
-        <button id="admin-login-btn" class="btn warn" style="margin-top: 10px; padding: 6px 12px; font-size: 0.8rem; border-radius: 8px; border: none;">
-            ⚙️ Admin Login
-        </button>
-      </div>
-    </div>
-
-    <!-- SUBJECT SCREEN -->
-    <div id="subject-screen" class="col hidden">
-      <h2 class="glowing-header">Subjects</h2>
-      <!-- Subjects now in a column layout -->
-      <div class="flex col-subjects centered">
-        <button id="hindi-btn" class="btn subject-glow-btn">🇮🇳 हिंदी</button>
-        <button id="math-btn" class="btn subject-glow-btn">➕ गणित</button>
-        <button id="reasoning-btn" class="btn subject-glow-btn">🧠 रीज़निंग</button>
-        <button id="gk-gs-btn" class="btn subject-glow-btn">🌍 GK/GS</button>
-      </div>
-    </div>
-
-    <!-- CHAPTERS SCREEN -->
-    <div id="chapters-screen" class="col hidden"></div>
-
-    <!-- QUESTIONS SCREEN -->
-    <div id="questions-screen" class="col hidden"></div>
-
-    <!-- ADMIN LOGIN SCREEN -->
-    <div id="admin-login-screen" class="col hidden">
-      <div class="card" style="max-width:480px">
-        <label>ईमेल</label>
-        <input id="admin-email" type="email" placeholder="ईमेल दर्ज करें" />
-        <label style="margin-top:10px">पासवर्ड</label>
-        <input id="admin-password" type="password" placeholder="पासवर्ड दर्ज करें" />
-        <div class="flex" style="margin-top:20px; justify-content: flex-end;">
-          <button id="login-btn" class="btn">लॉगिन करें</button>
-          <button id="back-to-main-from-login" class="btn ghost">← वापस</button>
-        </div>
-        <div id="login-message" class="message hidden"></div>
-      </div>
-    </div>
-
-    <!-- ADMIN PANEL SCREEN -->
-    <div id="admin-panel-screen" class="col hidden">
-      <div class="card" style="max-width:860px">
-        <h3>प्रश्न अपलोड / मैनेज करें</h3>
-        <div class="col" style="margin-top:15px">
-          <label>सब्जेक्ट चुनें</label>
-          <select id="subject-select"></select>
-
-          <label>चैप्टर चुनें</label>
-          <select id="chapter-select"></select>
-
-          <label>प्रश्न</label>
-          <textarea id="question-text" rows="3" placeholder="प्रश्न यहाँ लिखें"></textarea>
-
-          <label>सही उत्तर</label>
-          <input id="answer-text" type="text" placeholder="सही उत्तर" />
-
-          <label>विवरण (वैकल्पिक)</label>
-          <textarea id="description-text" rows="2" placeholder="विवरण"></textarea>
-
-          <input type="hidden" id="question-key-input" />
-          
-          <div class="flex" style="margin-top:10px; justify-content: flex-end;">
-            <button id="upload-question-btn" class="btn">प्रश्न अपलोड करें</button>
-            <button id="update-question-btn" class="btn hidden">प्रश्न अपडेट करें</button>
-            <button id="cancel-edit-btn" class="btn ghost hidden">कैंसिल</button>
-            <button id="back-to-main-from-admin" class="btn ghost">← वापस</button>
-          </div>
-
-          <div id="upload-message" class="message hidden"></div>
+        <!-- MAIN SCREEN -->
+        <div id="main-screen" class="col centered">
+            <div class="flex centered" style="margin-bottom:12px; flex-direction: column;">
+                <button id="ssc-gd-btn" class="btn">
+                    <i class="fa-solid fa-graduation-cap mr-2"></i>
+                    📚 SSC GD
+                </button>
+                <!-- The requested "छोटे से बटन" below SSC GD button -->
+                <button id="admin-login-btn" class="btn warn" style="margin-top: 10px; padding: 6px 12px; font-size: 0.8rem; border-radius: 8px; border: none;">
+                    ⚙️ Admin Login
+                </button>
+            </div>
         </div>
 
-        <div id="questions-list-container" class="col" style="margin-top:30px;">
-          <h4>मौजूदा प्रश्न</h4>
-          <div id="questions-list" class="chapter-list">कोई प्रश्न उपलब्ध नहीं।</div>
+        <!-- SUBJECT SCREEN -->
+        <div id="subject-screen" class="col hidden">
+            <h2 class="glowing-header">Subjects</h2>
+            <!-- Subjects now in a column layout -->
+            <div class="flex col-subjects centered">
+                <button id="hindi-btn" class="btn subject-glow-btn">🇮🇳 हिंदी</button>
+                <button id="math-btn" class="btn subject-glow-btn">➕ गणित</button>
+                <button id="reasoning-btn" class="btn subject-glow-btn">🧠 रीज़निंग</button>
+                <button id="gk-gs-btn" class="btn subject-glow-btn">🌍 GK/GS</button>
+            </div>
         </div>
-      </div>
-    </div>
 
-  </div>
+        <!-- CHAPTERS SCREEN -->
+        <div id="chapters-screen" class="col hidden"></div>
+
+        <!-- QUESTIONS SCREEN -->
+        <div id="questions-screen" class="col hidden"></div>
+
+        <!-- ADMIN LOGIN SCREEN -->
+        <div id="admin-login-screen" class="col hidden">
+            <div class="card" style="max-width:480px">
+                <label>ईमेल</label>
+                <input id="admin-email" type="email" placeholder="ईमेल दर्ज करें" />
+                <label style="margin-top:10px">पासवर्ड</label>
+                <input id="admin-password" type="password" placeholder="पासवर्ड दर्ज करें" />
+                <div class="flex" style="margin-top:20px; justify-content: flex-end;">
+                    <button id="login-btn" class="btn">लॉगिन करें</button>
+                    <button id="back-to-main-from-login" class="btn ghost">← वापस</button>
+                </div>
+                <div id="login-message" class="message hidden"></div>
+            </div>
+        </div>
+
+        <!-- ADMIN PANEL SCREEN -->
+        <div id="admin-panel-screen" class="col hidden">
+            <div class="card" style="max-width:860px">
+                <h3>प्रश्न अपलोड / मैनेज करें</h3>
+                <div class="col" style="margin-top:15px">
+                    <label>सब्जेक्ट चुनें</label>
+                    <select id="subject-select"></select>
+
+                    <label>चैप्टर चुनें</label>
+                    <select id="chapter-select"></select>
+
+                    <label>प्रश्न</label>
+                    <textarea id="question-text" rows="3" placeholder="प्रश्न यहाँ लिखें"></textarea>
+
+                    <label>सही उत्तर</label>
+                    <input id="answer-text" type="text" placeholder="सही उत्तर" />
+
+                    <label>विवरण (वैकल्पिक)</label>
+                    <textarea id="description-text" rows="2" placeholder="विवरण"></textarea>
+
+                    <input type="hidden" id="question-key-input" />
+                    
+                    <div class="flex" style="margin-top:10px; justify-content: flex-end;">
+                        <button id="upload-question-btn" class="btn">प्रश्न अपलोड करें</button>
+                        <button id="update-question-btn" class="btn hidden">प्रश्न अपडेट करें</button>
+                        <button id="cancel-edit-btn" class="btn ghost hidden">कैंसिल</button>
+                        <button id="back-to-main-from-admin" class="btn ghost">← वापस</button>
+                    </div>
+
+                    <div id="upload-message" class="message hidden"></div>
+                </div>
+
+                <div id="questions-list-container" class="col" style="margin-top:30px;">
+                    <h4>मौजूदा प्रश्न</h4>
+                    <div id="questions-list" class="chapter-list">कोई प्रश्न उपलब्ध नहीं।</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
 <script>
 /* ========== Firebase config ========== */
+// आपके द्वारा प्रदान की गई Firebase कॉन्फ़िग का उपयोग किया गया है।
 const firebaseConfig = {
-  apiKey: "AIzaSyAYyEHrGV1Ev1FaMO5U3qkHUmdNEHP_IX8",
-  authDomain: "sgs-study-hub.firebaseapp.com",
-  databaseURL: "https://sgs-study-hub-default-rtdb.firebaseio.com",
-  projectId: "sgs-study-hub",
-  storageBucket: "sgs-study-hub.firebasestorage.app",
-  messagingSenderId: "299932841646",
-  appId: "1:299932841646:web:21120e316a9b3134a1df3f"
+    apiKey: "AIzaSyDmttSwKYkI-8ogVPPoET3O5QajAGihQCw",
+    authDomain: "ssc-gd-d6aad.firebaseapp.com",
+    databaseURL: "https://ssc-gd-d6aad-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "ssc-gd-d6aad",
+    storageBucket: "ssc-gd-d6aad.firebasestorage.app",
+    messagingSenderId: "916448072631",
+    appId: "1:916448072631:web:99afca865385c3302f0e32"
 };
 try { firebase.initializeApp(firebaseConfig); console.log('Firebase init OK'); } catch(e){ console.error(e); }
 const auth = firebase.auth();
 const db = firebase.database();
 
+// Admin UID to verify the logged-in user
+// यह सुनिश्चित करता है कि केवल सही एडमिन पैनल तक पहुंच सकता है।
+const ADMIN_UID = 'y7MXlpAHLTcZ2qMyENNWBmrVVq82';
+
 /* ========== UI refs ========== */
 const screens = {
-  main: document.getElementById('main-screen'),
-  subject: document.getElementById('subject-screen'),
-  chapters: document.getElementById('chapters-screen'),
-  questions: document.getElementById('questions-screen'),
-  adminLogin: document.getElementById('admin-login-screen'),
-  adminPanel: document.getElementById('admin-panel-screen')
+    main: document.getElementById('main-screen'),
+    subject: document.getElementById('subject-screen'),
+    chapters: document.getElementById('chapters-screen'),
+    questions: document.getElementById('questions-screen'),
+    adminLogin: document.getElementById('admin-login-screen'),
+    adminPanel: document.getElementById('admin-panel-screen')
 };
 const mainTitle = document.getElementById('main-title');
 
@@ -543,66 +548,66 @@ const chaptersData = {
 
 /* ========== helpers ========== */
 function show(screenKey, title) {
-  Object.values(screens).forEach(el => el.classList.add('hidden'));
-  if (screens[screenKey]) screens[screenKey].classList.remove('hidden');
-  mainTitle.textContent = title || 'SSC GD QUIZ APP';
+    Object.values(screens).forEach(el => el.classList.add('hidden'));
+    if (screens[screenKey]) screens[screenKey].classList.remove('hidden');
+    mainTitle.textContent = title || 'SSC GD QUIZ APP';
 }
 function setMessage(el, text, type='') {
-  if (!el) return;
-  el.textContent = text;
-  el.className = 'message ' + (type==='success' ? 'success' : type==='error' ? 'error' : '');
-  el.classList.remove('hidden');
+    if (!el) return;
+    el.textContent = text;
+    el.className = 'message ' + (type==='success' ? 'success' : type==='error' ? 'error' : '');
+    el.classList.remove('hidden');
 }
 function clearMessage(el) {
-  if (!el) return;
-  el.textContent = '';
-  el.className = 'message hidden';
+    if (!el) return;
+    el.textContent = '';
+    el.className = 'message hidden';
 }
 function escapeHtml(s){ if (s===undefined || s===null) return ''; return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
 
 /* ========== render chapters ========== */
 function renderChapters(subjectKey) {
-  const container = screens.chapters;
-  container.innerHTML = '';
-  
-  // New: Chapters header
-  const header = document.createElement('h2');
-  header.className = 'glowing-header';
-  header.textContent = 'Chapters';
-  container.appendChild(header);
+    const container = screens.chapters;
+    container.innerHTML = '';
+    
+    // New: Chapters header
+    const header = document.createElement('h2');
+    header.className = 'glowing-header';
+    header.textContent = 'Chapters';
+    container.appendChild(header);
 
-  // back button
-  const back = document.createElement('button');
-  back.className = 'btn ghost';
-  back.textContent = '← वापस जाएं';
-  back.addEventListener('click', () => {
-    show('subject','Subjects');
-    history.pushState({screen:'subject'},'', '');
-  });
-  container.appendChild(back);
+    // back button
+    const back = document.createElement('button');
+    back.className = 'btn ghost';
+    back.textContent = '← वापस जाएं';
+    back.addEventListener('click', () => {
+        show('subject','Subjects');
+        history.pushState({screen:'subject'},'', '');
+    });
+    container.appendChild(back);
 
-  // chapter list (scrollable)
-  const listDiv = document.createElement('div');
-  listDiv.className = 'chapter-list';
-  container.appendChild(listDiv);
+    // chapter list (scrollable)
+    const listDiv = document.createElement('div');
+    listDiv.className = 'chapter-list';
+    container.appendChild(listDiv);
 
-  const chapterObj = chaptersData[subjectKey] || {};
-  for (const key in chapterObj) {
-    if (chapterObj.hasOwnProperty(key)) {
-      const chapterName = chapterObj[key];
-      const button = document.createElement('button');
-      button.className = 'btn';
-      button.innerHTML = `<span>${chapterName}</span>`;
-      button.addEventListener('click', () => {
-        show('questions', chapterName);
-        fetchQuestions(subjectKey, key);
-        history.pushState({ screen: 'questions', subject: subjectKey, chapter: key }, '', '');
-      });
-      listDiv.appendChild(button);
+    const chapterObj = chaptersData[subjectKey] || {};
+    for (const key in chapterObj) {
+        if (chapterObj.hasOwnProperty(key)) {
+            const chapterName = chapterObj[key];
+            const button = document.createElement('button');
+            button.className = 'btn';
+            button.innerHTML = `<span>${chapterName}</span>`;
+            button.addEventListener('click', () => {
+                show('questions', chapterName);
+                fetchQuestions(subjectKey, key);
+                history.pushState({ screen: 'questions', subject: subjectKey, chapter: key }, '', '');
+            });
+            listDiv.appendChild(button);
+        }
     }
-  }
 
-  show('chapters', subjectsData[subjectKey] ? subjectsData[subjectKey].name : 'Chapters');
+    show('chapters', subjectsData[subjectKey] ? subjectsData[subjectKey].name : 'Chapters');
 }
 
 /* ========== fetch & show questions ========== */
@@ -611,175 +616,175 @@ let currentIndex = 0;
 let currentRef = null;
 
 function fetchQuestions(subjectKey, chapterKey) {
-  const qScreen = screens.questions;
-  qScreen.innerHTML = '<div class="card">Loading questions...</div>';
-  if (currentRef) { try { currentRef.off('value'); } catch(e){} currentRef = null; }
+    const qScreen = screens.questions;
+    qScreen.innerHTML = '<div class="card">Loading questions...</div>';
+    if (currentRef) { try { currentRef.off('value'); } catch(e){} currentRef = null; }
 
-  const ref = db.ref(`questions/${subjectKey}/${chapterKey}`);
-  currentRef = ref;
-  ref.once('value')
-    .then(snapshot => {
-      const data = snapshot.val();
-      if (!data) {
-        qScreen.innerHTML = '<div class="message error">इस चैप्टर के लिए अभी कोई प्रश्न उपलब्ध नहीं।</div>';
-        return;
-      }
-      currentQuestions = Object.values(data);
-      currentIndex = 0;
-      showQuestion(currentQuestions[currentIndex], subjectKey, chapterKey);
-    })
-    .catch(err => {
-      console.error('fetch err', err);
-      qScreen.innerHTML = '<div class="message error">प्रश्न लाने में त्रुटि।</div>';
+    const ref = db.ref(`questions/${subjectKey}/${chapterKey}`);
+    currentRef = ref;
+    ref.once('value')
+        .then(snapshot => {
+            const data = snapshot.val();
+            if (!data) {
+                qScreen.innerHTML = '<div class="message error">इस चैप्टर के लिए अभी कोई प्रश्न उपलब्ध नहीं।</div>';
+                return;
+            }
+            currentQuestions = Object.values(data);
+            currentIndex = 0;
+            showQuestion(currentQuestions[currentIndex], subjectKey, chapterKey);
+        })
+        .catch(err => {
+            console.error('fetch err', err);
+            qScreen.innerHTML = '<div class="message error">प्रश्न लाने में त्रुटि।</div>';
+        });
+
+    ref.on('value', snap => {
+        const d = snap.val() || {};
+        currentQuestions = Object.values(d);
     });
-
-  ref.on('value', snap => {
-    const d = snap.val() || {};
-    currentQuestions = Object.values(d);
-  });
 }
 
 function showQuestion(qObj, subjectKey, chapterKey) {
-  const qScreen = screens.questions;
-  if (!qObj) { qScreen.innerHTML = '<div class="message">कोई प्रश्न नहीं।</div>'; return; }
+    const qScreen = screens.questions;
+    if (!qObj) { qScreen.innerHTML = '<div class="message">कोई प्रश्न नहीं।</div>'; return; }
 
-  qScreen.innerHTML = `
-    <div class="question-box">
-      <div><strong>${currentIndex+1}.</strong> ${escapeHtml(qObj.question || '')}</div>
-      <div style="margin-top:10px"><button class="btn ghost option-btn">${escapeHtml(qObj.answer || '')}</button></div>
-    </div>
-    <div id="desc-box" class="card hidden" style="margin-top:10px"><strong>विवरण:</strong><div>${escapeHtml(qObj.description || 'कोई विवरण नहीं।')}</div></div>
-    <div style="margin-top:10px" class="flex">
-      <button id="toggle-details-btn" class="btn">विवरण देखें</button>
-      <button id="prev-q-btn" class="btn ghost">पिछला प्रश्न</button>
-      <button id="next-q-btn" class="btn">अगला प्रश्न</button>
-      <button id="back-to-chapters" class="btn ghost">← चैप्टर</button>
-    </div>
-  `;
-  
-  const toggleBtn = document.getElementById('toggle-details-btn');
-  const prevBtn = document.getElementById('prev-q-btn');
-  const nextBtn = document.getElementById('next-q-btn');
-  const backBtn = document.getElementById('back-to-chapters');
-  const descBox = document.getElementById('desc-box');
-  const optionBtn = qScreen.querySelector('.option-btn');
+    qScreen.innerHTML = `
+        <div class="question-box">
+            <div><strong>${currentIndex+1}.</strong> ${escapeHtml(qObj.question || '')}</div>
+            <div style="margin-top:10px"><button class="btn ghost option-btn">${escapeHtml(qObj.answer || '')}</button></div>
+        </div>
+        <div id="desc-box" class="card hidden" style="margin-top:10px"><strong>विवरण:</strong><div>${escapeHtml(qObj.description || 'कोई विवरण नहीं।')}</div></div>
+        <div style="margin-top:10px" class="flex">
+            <button id="toggle-details-btn" class="btn">विवरण देखें</button>
+            <button id="prev-q-btn" class="btn ghost">पिछला प्रश्न</button>
+            <button id="next-q-btn" class="btn">अगला प्रश्न</button>
+            <button id="back-to-chapters" class="btn ghost">← चैप्टर</button>
+        </div>
+    `;
+    
+    const toggleBtn = document.getElementById('toggle-details-btn');
+    const prevBtn = document.getElementById('prev-q-btn');
+    const nextBtn = document.getElementById('next-q-btn');
+    const backBtn = document.getElementById('back-to-chapters');
+    const descBox = document.getElementById('desc-box');
+    const optionBtn = qScreen.querySelector('.option-btn');
 
-  // "विवरण देखें" button functionality (toggle)
-  toggleBtn.addEventListener('click', () => {
-    const isVisible = !descBox.classList.contains('hidden');
-    if (isVisible) {
-      descBox.classList.add('hidden');
-      optionBtn.classList.remove('hidden');
-      toggleBtn.textContent = 'विवरण देखें';
+    // "विवरण देखें" button functionality (toggle)
+    toggleBtn.addEventListener('click', () => {
+        const isVisible = !descBox.classList.contains('hidden');
+        if (isVisible) {
+            descBox.classList.add('hidden');
+            optionBtn.classList.remove('hidden');
+            toggleBtn.textContent = 'विवरण देखें';
+        } else {
+            descBox.classList.remove('hidden');
+            optionBtn.classList.add('hidden');
+            toggleBtn.textContent = 'विवरण छुपाएं';
+        }
+    });
+
+    // "Previous Question" button functionality
+    prevBtn.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+            showQuestion(currentQuestions[currentIndex], subjectKey, chapterKey);
+        }
+    });
+    
+    // Disable "Previous" button on first question
+    if (currentIndex === 0) {
+        prevBtn.disabled = true;
+        prevBtn.style.opacity = '0.5';
     } else {
-      descBox.classList.remove('hidden');
-      optionBtn.classList.add('hidden');
-      toggleBtn.textContent = 'विवरण छुपाएं';
+        prevBtn.disabled = false;
+        prevBtn.style.opacity = '1';
     }
-  });
 
-  // "Previous Question" button functionality
-  prevBtn.addEventListener('click', () => {
-    if (currentIndex > 0) {
-      currentIndex--;
-      showQuestion(currentQuestions[currentIndex], subjectKey, chapterKey);
-    }
-  });
-  
-  // Disable "Previous" button on first question
-  if (currentIndex === 0) {
-      prevBtn.disabled = true;
-      prevBtn.style.opacity = '0.5';
-  } else {
-      prevBtn.disabled = false;
-      prevBtn.style.opacity = '1';
-  }
+    // "Next Question" button functionality
+    nextBtn.addEventListener('click', () => {
+        currentIndex++;
+        if (currentIndex < currentQuestions.length) {
+            showQuestion(currentQuestions[currentIndex], subjectKey, chapterKey);
+        } else {
+            qScreen.innerHTML = `
+                <div class="message">सभी प्रश्न पूरे हो गए!</div>
+                <button id="restart-btn" class="btn" style="margin-top:10px">शुरू से शुरू करें</button>
+            `;
+            document.getElementById('restart-btn').addEventListener('click', () => { 
+                currentIndex=0; 
+                showQuestion(currentQuestions[currentIndex], subjectKey, chapterKey); 
+            });
+        }
+    });
 
-  // "Next Question" button functionality
-  nextBtn.addEventListener('click', () => {
-    currentIndex++;
-    if (currentIndex < currentQuestions.length) {
-      showQuestion(currentQuestions[currentIndex], subjectKey, chapterKey);
-    } else {
-      qScreen.innerHTML = `
-        <div class="message">सभी प्रश्न पूरे हो गए!</div>
-        <button id="restart-btn" class="btn" style="margin-top:10px">शुरू से शुरू करें</button>
-      `;
-      document.getElementById('restart-btn').addEventListener('click', () => { 
-        currentIndex=0; 
-        showQuestion(currentQuestions[currentIndex], subjectKey, chapterKey); 
-      });
-    }
-  });
-
-  // "Back to Chapters" button functionality
-  backBtn.addEventListener('click', () => { history.back(); });
+    // "Back to Chapters" button functionality
+    backBtn.addEventListener('click', () => { history.back(); });
 }
 
 /* ========== Admin Panel functionalities ========== */
 function populateAdminDropdowns() {
-  subjectSelect.innerHTML = '<option value="">-- सब्जेक्ट चुनें --</option>';
-  chapterSelect.innerHTML = '<option value="">-- चैप्टर चुनें --</option>';
-  questionsList.innerHTML = 'कोई प्रश्न उपलब्ध नहीं।';
-  questionsListContainer.classList.add('hidden');
-
-  for (const key in subjectsData) {
-    const o = document.createElement('option');
-    o.value = key;
-    o.textContent = subjectsData[key].name;
-    subjectSelect.appendChild(o);
-  }
-  subjectSelect.onchange = function() {
+    subjectSelect.innerHTML = '<option value="">-- सब्जेक्ट चुनें --</option>';
     chapterSelect.innerHTML = '<option value="">-- चैप्टर चुनें --</option>';
     questionsList.innerHTML = 'कोई प्रश्न उपलब्ध नहीं।';
     questionsListContainer.classList.add('hidden');
-    const sel = this.value;
-    if (sel && chaptersData[sel]) {
-      for (const c in chaptersData[sel]) {
-        const op = document.createElement('option');
-        op.value = c;
-        op.textContent = chaptersData[sel][c];
-        chapterSelect.appendChild(op);
-      }
+
+    for (const key in subjectsData) {
+        const o = document.createElement('option');
+        o.value = key;
+        o.textContent = subjectsData[key].name;
+        subjectSelect.appendChild(o);
     }
-  };
-  chapterSelect.onchange = fetchQuestionsForAdmin;
+    subjectSelect.onchange = function() {
+        chapterSelect.innerHTML = '<option value="">-- चैप्टर चुनें --</option>';
+        questionsList.innerHTML = 'कोई प्रश्न उपलब्ध नहीं।';
+        questionsListContainer.classList.add('hidden');
+        const sel = this.value;
+        if (sel && chaptersData[sel]) {
+            for (const c in chaptersData[sel]) {
+                const op = document.createElement('option');
+                op.value = c;
+                op.textContent = chaptersData[sel][c];
+                chapterSelect.appendChild(op);
+            }
+        }
+    };
+    chapterSelect.onchange = fetchQuestionsForAdmin;
 }
 
 function fetchQuestionsForAdmin() {
-  const subject = subjectSelect.value;
-  const chapter = chapterSelect.value;
-  questionsList.innerHTML = 'लोड हो रहा है...';
-  questionsListContainer.classList.remove('hidden');
+    const subject = subjectSelect.value;
+    const chapter = chapterSelect.value;
+    questionsList.innerHTML = 'लोड हो रहा है...';
+    questionsListContainer.classList.remove('hidden');
 
-  if (!subject || !chapter) {
-    questionsList.innerHTML = 'कृपया सब्जेक्ट और चैप्टर चुनें।';
-    return;
-  }
+    if (!subject || !chapter) {
+        questionsList.innerHTML = 'कृपया सब्जेक्ट और चैप्टर चुनें।';
+        return;
+    }
 
-  const ref = db.ref(`questions/${subject}/${chapter}`);
-  ref.on('value', snapshot => {
-    const data = snapshot.val();
-    questionsList.innerHTML = '';
-    if (!data) {
-      questionsList.innerHTML = 'कोई प्रश्न उपलब्ध नहीं।';
-      return;
-    }
-    
-    for (const key in data) {
-      const q = data[key];
-      const div = document.createElement('div');
-      div.className = 'question-list-item';
-      div.innerHTML = `
-        <span>${escapeHtml(q.question)}</span>
-        <div class="flex">
-          <button class="btn" onclick="editQuestion('${key}', '${subject}', '${chapter}')">एडिट</button>
-          <button class="btn warn" onclick="deleteQuestion('${key}', '${subject}', '${chapter}')">डिलीट</button>
-        </div>
-      `;
-      questionsList.appendChild(div);
-    }
-  });
+    const ref = db.ref(`questions/${subject}/${chapter}`);
+    ref.on('value', snapshot => {
+        const data = snapshot.val();
+        questionsList.innerHTML = '';
+        if (!data) {
+            questionsList.innerHTML = 'कोई प्रश्न उपलब्ध नहीं।';
+            return;
+        }
+        
+        for (const key in data) {
+            const q = data[key];
+            const div = document.createElement('div');
+            div.className = 'question-list-item';
+            div.innerHTML = `
+                <span>${escapeHtml(q.question)}</span>
+                <div class="flex">
+                    <button class="btn" onclick="editQuestion('${key}', '${subject}', '${chapter}')">एडिट</button>
+                    <button class="btn warn" onclick="deleteQuestion('${key}', '${subject}', '${chapter}')">डिलीट</button>
+                </div>
+            `;
+            questionsList.appendChild(div);
+        }
+    });
 }
 
 function resetAdminForm() {
@@ -834,85 +839,122 @@ function editQuestion(key, subject, chapter) {
 
 
 uploadQuestionBtn.addEventListener('click', () => {
-  const subject = subjectSelect.value;
-  const chapter = chapterSelect.value;
-  const question = questionText.value.trim();
-  const answer = answerText.value.trim();
-  const description = descriptionText.value.trim();
+    const subject = subjectSelect.value;
+    const chapter = chapterSelect.value;
+    const question = questionText.value.trim();
+    const answer = answerText.value.trim();
+    const description = descriptionText.value.trim();
 
-  if (!subject || !chapter || !question || !answer) {
-    setMessage(uploadMessage, 'कृपया सभी आवश्यक फ़ील्ड भरें।', 'error'); return;
-  }
+    if (!subject || !chapter || !question || !answer) {
+        setMessage(uploadMessage, 'कृपया सभी आवश्यक फ़ील्ड भरें।', 'error'); return;
+    }
 
-  const payload = { question, answer, description: description||null, createdAt: Date.now() };
-  db.ref(`questions/${subject}/${chapter}`).push(payload)
-    .then(()=>{ setMessage(uploadMessage, 'प्रश्न सफलतापूर्वक अपलोड हो गया!', 'success'); resetAdminForm(); })
-    .catch(err=>{ console.error('upload err', err); setMessage(uploadMessage, 'अपलोड त्रुटि: '+(err.message||err),'error'); });
+    const payload = { question, answer, description: description||null, createdAt: Date.now() };
+    db.ref(`questions/${subject}/${chapter}`).push(payload)
+        .then(()=>{ setMessage(uploadMessage, 'प्रश्न सफलतापूर्वक अपलोड हो गया!', 'success'); resetAdminForm(); })
+        .catch(err=>{ console.error('upload err', err); setMessage(uploadMessage, 'अपलोड त्रुटि: '+(err.message||err),'error'); });
 });
 
 updateQuestionBtn.addEventListener('click', () => {
-  const subject = subjectSelect.value;
-  const chapter = chapterSelect.value;
-  const key = questionKeyInput.value;
-  const question = questionText.value.trim();
-  const answer = answerText.value.trim();
-  const description = descriptionText.value.trim();
+    const subject = subjectSelect.value;
+    const chapter = chapterSelect.value;
+    const key = questionKeyInput.value;
+    const question = questionText.value.trim();
+    const answer = answerText.value.trim();
+    const description = descriptionText.value.trim();
 
-  if (!subject || !chapter || !key || !question || !answer) {
-    setMessage(uploadMessage, 'कृपया सभी आवश्यक फ़ील्ड भरें।', 'error'); return;
-  }
+    if (!subject || !chapter || !key || !question || !answer) {
+        setMessage(uploadMessage, 'कृपया सभी आवश्यक फ़ील्ड भरें।', 'error'); return;
+    }
 
-  const payload = { question, answer, description: description||null };
-  db.ref(`questions/${subject}/${chapter}/${key}`).update(payload)
-    .then(()=>{ setMessage(uploadMessage, 'प्रश्न सफलतापूर्वक अपडेट हो गया!', 'success'); resetAdminForm(); })
-    .catch(err=>{ console.error('update err', err); setMessage(uploadMessage, 'अपडेट त्रुटि: '+(err.message||err),'error'); });
+    const payload = { question, answer, description: description||null };
+    db.ref(`questions/${subject}/${chapter}/${key}`).update(payload)
+        .then(()=>{ setMessage(uploadMessage, 'प्रश्न सफलतापूर्वक अपडेट हो गया!', 'success'); resetAdminForm(); })
+        .catch(err=>{ console.error('update err', err); setMessage(uploadMessage, 'अपडेट त्रुटि: '+(err.message||err),'error'); });
 });
 
 cancelEditBtn.addEventListener('click', resetAdminForm);
 
 /* ========== initial bindings ========== */
 window.addEventListener('DOMContentLoaded', () => {
-  // main nav
-  sscGDBtn.addEventListener('click', ()=>{ show('subject','Subjects'); history.pushState({screen:'subject'},'', ''); });
-  adminLoginBtn.addEventListener('click', ()=>{ show('adminLogin','एडमिन लॉगिन'); history.pushState({screen:'adminLogin'},'', ''); });
+    // main nav
+    sscGDBtn.addEventListener('click', ()=>{ show('subject','Subjects'); history.pushState({screen:'subject'},'', ''); });
+    adminLoginBtn.addEventListener('click', ()=>{ show('adminLogin','एडमिन लॉगिन'); history.pushState({screen:'adminLogin'},'', ''); });
 
-  // subject buttons
-  if (hindiBtn) hindiBtn.addEventListener('click', ()=>{ renderChapters('hindi'); history.pushState({screen:'chapters',subject:'hindi'},'', ''); });
-  if (mathBtn) mathBtn.addEventListener('click', ()=>{ renderChapters('math'); history.pushState({screen:'chapters',subject:'math'},'', ''); });
-  if (reasoningBtn) reasoningBtn.addEventListener('click', ()=>{ renderChapters('reasoning'); history.pushState({screen:'chapters',subject:'reasoning'},'', ''); });
-  if (gkGsBtn) gkGsBtn.addEventListener('click', ()=>{ renderChapters('gkGs'); history.pushState({screen:'chapters',subject:'gkGs'},'', ''); });
+    // subject buttons
+    if (hindiBtn) hindiBtn.addEventListener('click', ()=>{ renderChapters('hindi'); history.pushState({screen:'chapters',subject:'hindi'},'', ''); });
+    if (mathBtn) mathBtn.addEventListener('click', ()=>{ renderChapters('math'); history.pushState({screen:'chapters',subject:'math'},'', ''); });
+    if (reasoningBtn) reasoningBtn.addEventListener('click', ()=>{ renderChapters('reasoning'); history.pushState({screen:'chapters',subject:'reasoning'},'', ''); });
+    if (gkGsBtn) gkGsBtn.addEventListener('click', ()=>{ renderChapters('gkGs'); history.pushState({screen:'chapters',subject:'gkGs'},'', ''); });
 
-  // admin nav
-  backToMainFromLogin.addEventListener('click', ()=>{ show('main'); history.pushState({screen:'main'},'', ''); });
-  backToMainFromAdmin.addEventListener('click', ()=>{ show('main'); history.pushState({screen:'main'},'', ''); });
+    // admin nav
+    backToMainFromLogin.addEventListener('click', ()=>{ show('main'); history.pushState({screen:'main'},'', ''); });
+    backToMainFromAdmin.addEventListener('click', ()=>{ show('main'); history.pushState({screen:'main'},'', ''); });
 
-  // admin login (local)
-  const ADMIN_EMAIL = "sachinkumarjii753@gmail.com";
-  const ADMIN_PASS = "Sachin@802165";
-  loginBtn.addEventListener('click', ()=> {
-    const e = adminEmailInput.value.trim(); const p = adminPasswordInput.value;
-    if (e === ADMIN_EMAIL && p === ADMIN_PASS) { populateAdminDropdowns(); show('adminPanel','एडमिन पैनल'); clearMessage(loginMessage); history.pushState({screen:'adminPanel'},'', ''); }
-    else setMessage(loginMessage, 'गलत ईमेल या पासवर्ड।', 'error');
-  });
+    // admin login (using Firebase Authentication)
+    loginBtn.addEventListener('click', () => {
+        const email = adminEmailInput.value.trim();
+        const password = adminPasswordInput.value;
 
-  // anonymous auth
-  auth.signInAnonymously().then(()=>console.log('anon signed in')).catch(err=>console.warn('anon sign-in failed',err));
+        if (!email || !password) {
+            setMessage(loginMessage, 'कृपया ईमेल और पासवर्ड भरें।', 'error');
+            return;
+        }
+        
+        clearMessage(loginMessage);
 
-  // start
-  show('main');
-  history.replaceState({screen:'main'},'', '');
+        // Firebase Auth के साथ ईमेल और पासवर्ड से साइन इन करें
+        auth.signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                // UID के साथ सत्यापित करें ताकि केवल सही एडमिन एक्सेस कर सके
+                if (user.uid === ADMIN_UID) {
+                    populateAdminDropdowns();
+                    show('adminPanel', 'एडमिन पैनल');
+                    history.pushState({ screen: 'adminPanel' }, '', '');
+                } else {
+                    setMessage(loginMessage, 'आपके पास एडमिन एक्सेस नहीं है।', 'error');
+                    auth.signOut(); // गलत UID होने पर साइन आउट करें
+                }
+            })
+            .catch((error) => {
+                let errorMessage = 'लॉगिन में त्रुटि।';
+                switch(error.code) {
+                    case 'auth/wrong-password':
+                        errorMessage = 'गलत पासवर्ड।';
+                        break;
+                    case 'auth/user-not-found':
+                        errorMessage = 'उपयोगकर्ता नहीं मिला।';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage = 'अमान्य ईमेल प्रारूप।';
+                        break;
+                    default:
+                        errorMessage = 'लॉगिन विफल रहा: ' + error.message;
+                        break;
+                }
+                setMessage(loginMessage, errorMessage, 'error');
+            });
+    });
+
+    // anonymous auth for regular quiz access
+    auth.signInAnonymously().then(()=>console.log('anon signed in')).catch(err=>console.warn('anon sign-in failed',err));
+
+    // start
+    show('main');
+    history.replaceState({screen:'main'},'', '');
 });
 
 /* ========== popstate ========== */
 window.addEventListener('popstate', (e) => {
-  const s = e.state;
-  if (!s) { show('main'); return; }
-  if (s.screen === 'main') show('main');
-  else if (s.screen === 'subject') show('subject','Subjects');
-  else if (s.screen === 'chapters') renderChapters(s.subject);
-  else if (s.screen === 'questions') fetchQuestions(s.subject, s.chapter);
-  else if (s.screen === 'adminLogin') show('adminLogin','एडमिन लॉगिन');
-  else if (s.screen === 'adminPanel') { populateAdminDropdowns(); show('adminPanel','एडमिन पैनल'); }
+    const s = e.state;
+    if (!s) { show('main'); return; }
+    if (s.screen === 'main') show('main');
+    else if (s.screen === 'subject') show('subject','Subjects');
+    else if (s.screen === 'chapters') renderChapters(s.subject);
+    else if (s.screen === 'questions') fetchQuestions(s.subject, s.chapter);
+    else if (s.screen === 'adminLogin') show('adminLogin','एडमिन लॉगिन');
+    else if (s.screen === 'adminPanel') { populateAdminDropdowns(); show('adminPanel','एडमिन पैनल'); }
 });
 </script>
 </body>
